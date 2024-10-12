@@ -1,14 +1,23 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.contrib import admin
+from django.urls import include, path
+from rest_framework import routers
 from apps.users.views import UserViewSet
 from apps.boards.views import BoardViewSet
-from django.contrib import admin
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
-router = DefaultRouter()
+# Create a router and register your viewsets
+router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'boards', BoardViewSet)
 
 urlpatterns = [
-    path('api/', include(router.urls)),
-    path('api/admin/', admin.site.urls),
+    path('api/', include(router.urls)),  # Include all router URLs under /api/
+    path('api/admin/', admin.site.urls),  # Admin site
+
+    # Token URLs
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

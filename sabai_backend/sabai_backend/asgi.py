@@ -1,5 +1,5 @@
 """
-ASGI config for sabai_backend project.
+ASGI config for sabi_backend project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sabai_backend.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sabi_backend.settings')
 
 application = get_asgi_application()
