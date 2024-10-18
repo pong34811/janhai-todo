@@ -1,0 +1,48 @@
+.nopage-container {
+    text-align: center;
+    padding: 100px 20px;
+    background-color: #f7f7f7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .nopage-title {
+    font-size: 96px;
+    color: #ff6b6b;
+    margin-bottom: 20px;
+  }
+  
+  .nopage-message {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .nopage-description {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 30px;
+  }
+  
+  .home-link {
+    text-decoration: none;
+  }
+  
+  .home-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .home-button:hover {
+    background-color: #0056b3;
+  }
+  
