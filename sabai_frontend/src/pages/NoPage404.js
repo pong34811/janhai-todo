@@ -5,7 +5,7 @@ import './NoPage404.css';  // สไตล์แยกไฟล์
 export default function NoPage404() {
   return (
     <div className="nopage-container">
-    
+      <img src="/logo.png" alt="Logo" className="logo" />
       <h1 className="nopage-title">404</h1>
       <p className="nopage-message">ขออภัย ไม่พบหน้าที่คุณต้องการ</p>
       <p className="nopage-description">
