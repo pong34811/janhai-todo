@@ -4,6 +4,8 @@ import LoginView from "../pages/LoginView";
 import HomeView from "../pages/HomeView";
 import NoPage404 from "../pages/NoPage404";
 import BoardView from "../pages/BoardView";
+import HeaderView from '../pages/HeaderView';
+
 
 
 function CustomRoute() {
@@ -11,7 +13,7 @@ function CustomRoute() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginView />} />
-        <Route path="/" element={<HomeView />}>
+        <Route path="/" element={<HeaderView />}>
           <Route index element={<HomeView />} />
         </Route>
         <Route path="/board" element={<BoardView />} />

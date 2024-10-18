@@ -1,0 +1,54 @@
+.header {
+    background-color: #062c80; /* สีพื้นหลังของ Header */
+    padding: 10px 20px; /* เพิ่มการเว้นระยะภายใน */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้กับ Header */
+    display: flex;
+    justify-content: space-between; /* จัดเรียงให้โลโก้อยู่ซ้ายและลิงก์อยู่ขวา */
+    align-items: center; /* จัดแนวกลางในแนวตั้ง */
+  }
+  
+  .logo-img {
+    height: 100px; /* ขนาดโลโก้ */
+    margin-right: 20px; /* เว้นระยะระหว่างโลโก้กับลิงก์ */
+  }
+  
+  .login-button {
+    height: 100px;
+    width: 150px;
+    background-color: #0079BF; /* Trello's blue color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 25px; /* Increased padding */
+    font-size: 18px; /* Larger font size */
+    font-weight: bold;  /* Make text bold */
+    cursor: pointer;
+    text-decoration: none; /* Remove default underline */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-left: 25px; /* เพิ่ม margin-left 10px */
+  }
+  
+  .login-button:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
+    transform: translateY(-2px); /* Subtle lift on hover */
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center; /* จัดแนวกลางในแนวตั้ง */
+  }
+  
+  .nav-link {
+    font-size: 18px; /* ขนาดฟอนต์ */
+    color: #ffffff; /* สีของลิงก์ */
+    text-decoration: none; /* ไม่มีเส้นใต้ */
+    padding: 10px 15px; /* เพิ่มการเว้นระยะ */
+    border-radius: 5px; /* ให้มุมของลิงก์มีความโค้ง */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* เพิ่มแอนิเมชัน */
+    margin-left: 25px;
+  }
+  
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* เพิ่มพื้นหลังเมื่อมีการโฮเวอร์ */
+    transform: scale(1.05); /* ขยายขนาดเมื่อมีการโฮเวอร์ */
+  }
