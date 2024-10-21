@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { URL_AUTH } from '../routes/CustomAPI';
+import './LoginView.css'
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -20,22 +21,28 @@ const Login = () => {
       localStorage.setItem('token', access);
       localStorage.setItem('username', user.username); // เก็บ username
 
-      
-      navigate('/blogs'); // Redirect to boards page
+      navigate('/boards'); // Redirect to boards page
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form">
+        <h2>Login</h2>
         <label>Username:</label>
-        <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} />
-        <br />
+        <input
+          type="text"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        />
         <label>Password:</label>
-        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
-        <br />
+        <input
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
         <button type="submit">Login</button>
       </form>
     </div>
