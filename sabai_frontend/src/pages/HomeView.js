@@ -5,9 +5,6 @@ import { FaPlay } from 'react-icons/fa'; // ใช้ไอคอนจาก re
 export default function HomeView() {
     return (
         <div className="homepage-container">
-            
-
-
             {/* Main Content */}
             <main className="main-content flex flex-col items-center justify-center text-center h-screen bg-gradient-to-r from-blue-500 to-pink-500 text-white">
                 <h1 className="text-6xl font-extrabold mb-6">Trello brings all your tasks, teammates, and tools together</h1>
