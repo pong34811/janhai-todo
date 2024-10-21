@@ -5,6 +5,7 @@ import HomeView from "../pages/HomeView";
 import NoPage404 from "../pages/NoPage404";
 import BoardView from "../pages/BoardView";
 import HeaderView from '../pages/HeaderView';
+import ProtectedRoute from './ProtectedRoute';
 
 
 
@@ -16,7 +17,9 @@ function CustomRoute() {
         <Route path="/" element={<HeaderView />}>
           <Route index element={<HomeView />} />
         </Route>
-        <Route path="/board" element={<BoardView />} />
+        <Route path="/board" element={<ProtectedRoute />} >
+          <Route index element={<BoardView />} />
+        </Route>
         <Route path="*" element={<NoPage404 />} />
       </Routes>
     </BrowserRouter>
