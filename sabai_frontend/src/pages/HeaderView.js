@@ -12,7 +12,7 @@ const HeaderView = () => {
                     <Link to="/features" className="nav-link">Features</Link>
                     <Link to="/contact" className="nav-link">Contact</Link>
                     <Link to="/profile" className="nav-link">Profile</Link>
-                    <button className="login-button">Log In</button>
+                    <Link to="/login" className="login-button">Log In</Link>
                 </nav>
             </header>
             <Outlet />
