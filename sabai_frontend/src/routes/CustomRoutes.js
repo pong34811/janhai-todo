@@ -17,7 +17,7 @@ function CustomRoute() {
         <Route path="/" element={<HeaderView />}>
           <Route index element={<HomeView />} />
         </Route>
-        <Route path="/board" element={<ProtectedRoute />} >
+        <Route path="/boards" element={<ProtectedRoute />} >
           <Route index element={<BoardView />} />
         </Route>
         <Route path="*" element={<NoPage404 />} />
