@@ -1,0 +1,121 @@
+/* LoginView.css */
+
+.login-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #062c80, #ff4d88);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+    box-sizing: border-box; /* รวม padding ในความกว้าง */
+    font-family: 'Kanit', sans-serif;
+}
+
+.login-form {
+    background-color: white;
+    padding: 40px;
+    width: 40vh;
+    height: 40vh;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #062c80;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 12px 30px;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    background-color: #0056b3;
+}
+
+.extra-link {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.extra-link a {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.extra-link a:hover {
+    color: #0056b3;
+}
+
+
+@media (max-width: 600px) {
+    .login-container {
+        padding: 10px; /* ลด padding สำหรับมือถือ */
+
+    }
+
+    .login-form {
+        padding: 20px;
+        width: 40vh;
+        height: 50vh;
+
+    }
+
+    .login-form h2 {
+        margin-top: 25px;
+        margin-bottom: 50px;
+        font-size: 28px; /* ขนาดหัวเรื่องเล็กลง */
+    }
+
+    .login-form input {
+        padding: 10px; /* ลด padding ของ input */
+        font-size: 14px; /* ขนาดตัวอักษรเล็กลง */
+
+    }
+
+    .login-form button {
+        margin-top: 50px;
+        padding: 20px; /* ลด padding ของปุ่ม */
+        font-size: 16px; /* ขนาดตัวอักษรเล็กลง */
+    }
+
+    .extra-link a {
+        font-size: 12px; /* ขนาดข้อความลิงก์เล็กลง */
+    }
+}

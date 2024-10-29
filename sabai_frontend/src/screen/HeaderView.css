@@ -1,0 +1,35 @@
+.header-bar {
+  background-color: #062c80;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; 
+  padding: 10px 0;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  .item {
+    color: white; /* Text color */
+    background-color: transparent; /* Transparent background */
+    font-size: 18px; /* Base font size */
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 14px 20px; /* Padding around items */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  .item-img {
+    height: 80px; 
+    width: auto; 
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 475px) {
+    .header-bar {
+        
+      flex-direction: column;
+      .item{
+        font-size: 15px;
+      }
+      }
+
+
+}
