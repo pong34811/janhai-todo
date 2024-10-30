@@ -1,14 +1,20 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from .serializers import UserSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]  # ให้แน่ใจว่าผู้ใช้ล็อกอิน
+    
+    def get_permissions(self):
+        # อนุญาตให้ทุกคนสามารถสร้างผู้ใช้ใหม่ได้ (AllowAny)
+        # แต่ต้องยืนยันตัวตน (IsAuthenticated) สำหรับการดูหรือแก้ไขข้อมูลผู้ใช้
+        if self.action == 'create':
+            return [AllowAny()]
+        return [IsAuthenticated()]
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
