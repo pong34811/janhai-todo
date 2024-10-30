@@ -23,24 +23,24 @@ export default function HomeView() {
         <div className="main-two">
           <div className="work-two">
             <GoCalendar className="icon" />
-            <p class="work-heading">Projects</p>
-            <p class="work-text">
+            <p className="work-heading">Projects</p>
+            <p className="work-text">
               I have worked on many projects and I am very proud of them. I am a
               very good developer and I am always looking for new projects.
             </p>
           </div>
           <div className="work-two">
             <GoBrowser className="icon" />
-            <p class="work-heading">Web App</p>
-            <p class="work-text">
+            <p className="work-heading">Web App</p>
+            <p className="work-text">
               I have worked on many projects and I am very proud of them. I am a
               very good developer and I am always looking for new projects.
             </p>
           </div>
           <div className="work-two">
             <GoMortarBoard className="icon" />
-            <p class="work-heading">Development</p>
-            <p class="work-text">
+            <p className="work-heading">Development</p>
+            <p className="work-text">
               I have worked on many projects and I am very proud of them. I am a
               very good developer and I am always looking for new projects.
             </p>
