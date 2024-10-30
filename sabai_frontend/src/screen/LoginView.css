@@ -1,121 +1,102 @@
 /* LoginView.css */
 
-.login-container {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to right, #062c80, #ff4d88);
-    color: white;
-    display: flex;
+
+
+
+.container-login {
+    display: block;
+    text-align: center;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    flex-direction: column;
-    box-sizing: border-box; /* รวม padding ในความกว้าง */
+    background: linear-gradient(to right, #4725E1, #5E0C77);
     font-family: 'Kanit', sans-serif;
-}
+    margin: 0;
+    padding: 0;
 
-.login-form {
-    background-color: white;
-    padding: 40px;
-    width: 40vh;
-    height: 40vh;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    color: #333;
-}
-
-.login-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #062c80;
-}
-
-.login-form label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #333;
-}
-
-.login-form input {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 30px;
-    outline: none;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    font-size: 16px;
-}
+    min-height: 100vh;
 
-.login-form button {
-    width: 100%;
-    padding: 12px 30px;
-    background-color: #007bff;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 30px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-}
+    .header-login {
+        background-color: #062C80;
 
-.login-form button:hover {
-    background-color: #0056b3;
-}
-
-.extra-link {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.extra-link a {
-    color: #007bff;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.extra-link a:hover {
-    color: #0056b3;
-}
-
-
-@media (max-width: 600px) {
-    .login-container {
-        padding: 10px; /* ลด padding สำหรับมือถือ */
-
+        img {
+            height: 100px;
+        }
     }
 
     .login-form {
+        width: 400px;
+        height: auto;
         padding: 20px;
-        width: 40vh;
-        height: 50vh;
+        background-color: #ffffff;
+        flex-direction: column;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        margin: auto;
+        margin-top: 80px;
+        img{
+            height: 75px;
+            border-radius: 100px;
+        }
+        &:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
 
-    }
+        .form-input-login {
+            width: 100%;
 
-    .login-form h2 {
-        margin-top: 25px;
-        margin-bottom: 50px;
-        font-size: 28px; /* ขนาดหัวเรื่องเล็กลง */
-    }
+            label {
+                display: block;
+                margin-bottom: 10px;
+                font-size: 16px;
+                color: #555;
 
-    .login-form input {
-        padding: 10px; /* ลด padding ของ input */
-        font-size: 14px; /* ขนาดตัวอักษรเล็กลง */
+            }
 
-    }
+            input {
+                padding: 12px;
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 30px;
+                outline: none;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                font-size: 16px;
+                transition: border-color 0.3s ease;
 
-    .login-form button {
-        margin-top: 50px;
-        padding: 20px; /* ลด padding ของปุ่ม */
-        font-size: 16px; /* ขนาดตัวอักษรเล็กลง */
-    }
+                &:focus {
+                    border-color: #007bff;
+                }
+            }
+        }
 
-    .extra-link a {
-        font-size: 12px; /* ขนาดข้อความลิงก์เล็กลง */
+        .form-button-login {
+            text-align: center;
+            button {
+
+                padding: 12px 30px;
+                background-color: #007bff;
+                color: white;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 30px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+                border: none;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #0056b3;
+                    /* เปลี่ยนสีเมื่อ hover */
+                    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+                    /* เพิ่ม shadow เมื่อ hover */
+                }
+
+                &:active {
+                    transform: translateY(2px);
+                    /* ทำให้ปุ่มดูเหมือนกดลง */
+                }
+            }
+        }
     }
 }

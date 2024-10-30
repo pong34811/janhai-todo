@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { URL_AUTH } from "../routes/CustomAPI";
 import "./LoginView.css";
 
@@ -29,24 +29,41 @@ const Login = () => {
 
   return (
     <>
-      <div className="login-container">
-        <form onSubmit={handleSubmit} className="login-form">
-          <h2>Login</h2>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <button type="submit">Login</button>
-        </form>
-      </div>
+      <main>
+        <div className="container-login">
+          <div className="header-login">
+            <img src="/logo.png" className="item-img" alt="Logo" />
+          </div>
+          <div className="login-form">
+            <form onSubmit={handleSubmit}>
+              <div className="form-title">
+                <h2>Login</h2>
+                <img src="/logo.png" className="item-img" alt="Logo" />
+              </div>
+              <div className="form-input-login">
+                <label>Username:</label>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(event) => setUsername(event.target.value)}
+                  required
+                />
+                <label>Password:</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                />
+                <p>Not a member? <Link to="/register">Register</Link></p>
+              </div>
+              <div className="form-button-login">
+                <button type="submit">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
     </>
   );
 };
