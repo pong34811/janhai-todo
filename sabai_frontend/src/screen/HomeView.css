@@ -20,6 +20,7 @@
     color: #fff;
     text-transform: uppercase;
     margin: 0;
+    padding: 20px;
   }
   p {
     font-size: 20px;
@@ -44,14 +45,16 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 40px 80px;
+  padding: 20px;
+  width: auto;
+  height: 365px;
 
   .work-two {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 40px;
+    padding: 20px;
 
     .icon {
       width: fit-content;
@@ -80,16 +83,14 @@
 .main-three {
   display: flex;
   align-items: center;
-  padding: 50px;
+  padding: 20px;
   background-color: #ffffff;
-  margin: 40px auto;
-
   .work-three {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 20px;
     img {
       width: 500px;
       max-width: 100%;
@@ -161,32 +162,25 @@
     flex-direction: column;
     max-width: 100%;
     height: 480px;
+    text-align: center;
     h1 {
       font-size: 25px;
       color: #fff;
       text-transform: uppercase;
-      text-align: center;
       margin: 0;
     }
-    p{
+    p {
       font-size: 10px;
     }
   }
-  .main-two{
+  .main-two {
     flex-direction: column;
-    max-width: 100%;
+    text-align: center;
+    width: auto;
     height: auto;
-    
-    .work-two{
-      display: flex;
-      margin-top: 25px;
-      text-transform: uppercase;
-    }
   }
-  .main-three{
+  .main-three {
     flex-direction: column;
-    max-width: 100%;
-    height: auto;
-
+    text-align: center;
   }
 }
