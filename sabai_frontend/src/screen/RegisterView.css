@@ -1,0 +1,95 @@
+.container-register {
+    display: block;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #4725E1, #5E0C77);
+    font-family: 'Kanit', sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+
+    .header-register {
+        background-color: #062C80;
+
+        img {
+            height: 100px;
+        }
+    }
+    .register-form {
+        width: 400px;
+        height: auto;
+        padding: 20px;
+        background-color: #ffffff;
+        flex-direction: column;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        margin: auto;
+        margin-top: 80px;
+        img{
+            height: 75px;
+            border-radius: 100px;
+        }
+        &:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-input-register {
+            width: 100%;
+
+            label {
+                display: block;
+                margin-bottom: 10px;
+                font-size: 16px;
+                color: #555;
+
+            }
+
+            input {
+                padding: 12px;
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 30px;
+                outline: none;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                font-size: 16px;
+                transition: border-color 0.3s ease;
+
+                &:focus {
+                    border-color: #007bff;
+                }
+            }
+        }
+
+        .form-button-register {
+            text-align: center;
+            button {
+
+                padding: 12px 30px;
+                background-color: #007bff;
+                color: white;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 30px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+                border: none;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #0056b3;
+                    /* เปลี่ยนสีเมื่อ hover */
+                    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+                    /* เพิ่ม shadow เมื่อ hover */
+                }
+
+                &:active {
+                    transform: translateY(2px);
+                    /* ทำให้ปุ่มดูเหมือนกดลง */
+                }
+            }
+        }
+    }
+}
