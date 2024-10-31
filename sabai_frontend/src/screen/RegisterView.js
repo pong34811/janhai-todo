@@ -29,7 +29,9 @@ const RegisterView = () => {
     <>
       <div className="container-register">
         <div className="header-register">
-          <img src="/logo.png" alt="Logo" />
+          <Link to="/">
+            <img src="/logo.png" className="item-img" alt="Logo" />
+          </Link>
         </div>
         <div className="register-form">
           <div className="form-title">
@@ -56,7 +58,9 @@ const RegisterView = () => {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
               />
-              <p>Have a member? <Link to="/login">Login</Link></p>
+              <p>
+                Have a member? <Link to="/login">Login</Link>
+              </p>
             </div>
             <div className="form-button-register">
               <button type="submit">Register</button>

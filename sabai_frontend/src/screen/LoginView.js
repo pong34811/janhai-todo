@@ -32,7 +32,9 @@ const Login = () => {
       <main>
         <div className="container-login">
           <div className="header-login">
-            <img src="/logo.png" className="item-img" alt="Logo" />
+            <Link to="/">
+              <img src="/logo.png" className="item-img" alt="Logo" />
+            </Link>
           </div>
           <div className="login-form">
             <form onSubmit={handleSubmit}>
@@ -55,7 +57,9 @@ const Login = () => {
                   onChange={(event) => setPassword(event.target.value)}
                   required
                 />
-                <p>Not a member? <Link to="/register">Register</Link></p>
+                <p>
+                  Not a member? <Link to="/register">Register</Link>
+                </p>
               </div>
               <div className="form-button-login">
                 <button type="submit">Login</button>
