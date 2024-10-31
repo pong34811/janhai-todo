@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'apps.users',
     'apps.boards',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {
@@ -73,6 +74,15 @@ CORS_ALLOW_METHODS = (
     "PATCH",
     "POST",
     "PUT",
+)
+
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
 )
 
 
