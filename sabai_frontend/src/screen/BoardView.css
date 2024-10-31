@@ -1,0 +1,19 @@
+.header-board{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 10px;
+
+    width: auto;
+    height: 105px;
+
+    background-color: #062c80;
+    box-sizing: border-box;
+    
+    .group{
+        img{
+            height: 80px;
+        }
+    }
+}
