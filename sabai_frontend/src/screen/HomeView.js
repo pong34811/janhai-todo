@@ -63,13 +63,21 @@ export default function HomeView() {
       </main>
 
       <footer className="footer">
-        <div className="footer-one">&copy; 2022 Developer</div>
+        <div className="footer-one">
+          <p className="p-home">&copy; 2024 Developer Waritnan Lamai</p>
+        </div>
         <div className="footer-two">
           <div className="work-footer">
             <span>More Info</span>
-            <Link className="Links" to="#">Home</Link>
-            <Link className="Links" to="#">About</Link>
-            <Link className="Links" to="#">Contact</Link>
+            <Link className="Links" to="#">
+              Home
+            </Link>
+            <Link className="Links" to="#">
+              About
+            </Link>
+            <Link className="Links" to="#">
+              Contact
+            </Link>
           </div>
           <div className="work-footer">
             <span>Social Links</span>

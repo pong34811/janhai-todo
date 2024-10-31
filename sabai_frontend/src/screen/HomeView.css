@@ -183,4 +183,11 @@
     flex-direction: column;
     text-align: center;
   }
+  .footer{
+    flex-direction: column;
+    text-align: center;
+    .footer-one{
+      font-size: 15px;    
+    }
+  }
 }
