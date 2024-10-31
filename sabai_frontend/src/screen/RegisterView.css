@@ -93,3 +93,15 @@
         }
     }
 }
+@media (max-width: 475px) {
+    .container-register{
+        width: auto;
+        height: auto;
+        padding: auto;
+        margin: auto;
+        .register-form{
+            width: 375px;
+        }
+
+    }
+}

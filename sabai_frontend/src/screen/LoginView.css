@@ -100,3 +100,17 @@
         }
     }
 }
+
+@media (max-width: 475px) {
+    .container-login{
+        width: auto;
+        height: auto;
+        padding: auto;
+        margin: auto;
+        .login-form{
+            width: 375px;
+        }
+
+    }
+}
+  
