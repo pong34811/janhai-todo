@@ -1,19 +1,331 @@
-.header-board{
+.header-board {
+    display: flex;
+    justify-content: space-between; /* Space between groups */
+    align-items: center;
+    margin: 0;
+    padding: 10px 20px; /* Increased padding for better spacing */
+    height: 105px;
+    background-color: #062c80;
+    box-sizing: border-box;
+  
+    .img-board {
+      height: 80px;
+      margin-right: 20px;
+    }
+  
+    .group-board {
+      display: flex;
+      align-items: center;
+  
+      .btn-modal {
+        padding: 10px 15px;
+        background-color: #5aac44; /* Green background */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-right: 20px; /* Added margin for spacing */
+        transition: background-color 0.3s, transform 0.2s;
+  
+        &:hover {
+          background-color: #4a9f39;
+          transform: translateY(-2px);
+        }
+  
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  
+    .search-board {
+      display: flex;
+      align-items: center;
+      margin-right: auto; /* ให้ search-board อยู่ทางซ้ายสุด */
+  
+      .search-input-board {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-right: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+  
+        &:focus {
+          border-color: #0079bf;
+          box-shadow: 0 0 5px rgba(0, 121, 191, 0.5);
+          outline: none;
+        }
+  
+        &::placeholder {
+          color: #999;
+        }
+      }
+  
+      .search-button-board {
+        background-color: #0079bf;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+  
+        &:hover {
+          background-color: #005f8a;
+          transform: translateY(-2px);
+        }
+  
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  
+    .user-board {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; /* Align items to the right */
+  
+      .username {
+        color: white;
+        font-size: 16px;
+        margin-bottom: 5px; /* Space below username */
+      }
+  
+      .logout-button {
+        padding: 10px 15px;
+        background-color: #d50000; /* Red background */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+  
+        &:hover {
+          background-color: #c00000;
+          transform: translateY(-2px);
+        }
+  
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  
+    .toggle-board {
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: none; /* Hide by default */
+    }
+  
+    .dropdown-board {
+      display: none;
+      position: absolute;
+      right: 10px; /* Add px for proper positioning */
+      top: 100px;
+      width: 400px;
+      background-color: #062c80;
+      overflow: hidden;
+  
+      .group-board,
+      .search-board,
+      .user-board {
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  
+  .main-board {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px; /* Added padding for better spacing */
+    width: auto;
+    height: auto;
+    background-color: #f4f4f4; /* Light background for contrast */
+  
+    .h1-board {
+      display: flex;
+      justify-content: center;
+      text-align: center; /* Center text */
+      margin-bottom: 20px; /* Add some space below the heading */
+      font-size: 24px; /* Adjust font size as needed */
+      color: #333; /* Change text color for contrast */
+      width: 100%; /* Ensure the heading takes full width */
+    }
+  
+    .work-board {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100%;
+  
+      .ul-board {
+        display: grid; /* Use grid for a structured layout */
+        grid-template-columns: repeat(4, 1fr); /* 4 columns */
+        gap: 16px; /* Space between items */
+        list-style-type: none;
+        padding: 0; /* Remove default padding */
+        margin: 0; /* Remove default margin */
+        width: auto; /* Full width for responsiveness */
+  
+        .li-board {
+          background-color: #ffffff; /* White background for items */
+          border-radius: 8px;
+          padding: 60px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
+          display: flex;
+          flex-direction: column; /* Stack content vertically */
+          align-items: center; /* Center items horizontally */
+          text-align: center; /* Center text */
+          transition: transform 0.2s, box-shadow 0.2s; /* Smooth effects */
+          width: auto;
+  
+          &:hover {
+            transform: translateY(-2px); /* Lift effect on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+          }
+  
+          input {
+            margin-bottom: 8px;
+            width: auto;
+            padding: 10px; /* Added padding for better interaction */
+            border-radius: 4px;
+            border: 1px solid #ccc; /* Subtle border */
+            transition: border-color 0.3s; /* Transition for focus effect */
+  
+            &:focus {
+              border-color: #0079bf; /* Highlight border on focus */
+              outline: none; /* Remove default outline */
+            }
+          }
+  
+          h3 {
+            margin: 0 0 10px; /* Adjusted margin for spacing */
+            font-size: 18px; /* Increased font size for headings */
+            color: #333; /* Dark text for contrast */
+          }
+  
+          .title-board {
+            display: flex;
+            gap: 8px; /* Space between buttons */
+            width: auto; /* Full width for buttons */
+  
+            .button-edit,
+            .button-delete,
+            .button-view {
+              flex: 1; /* Equal width for buttons */
+              padding: 10px; /* Increased padding */
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-weight: bold; /* Bold text for emphasis */
+              transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+  
+              &:hover {
+                transform: translateY(-2px); /* Lift effect on hover */
+              }
+            }
+  
+            .button-edit {
+              background-color: #0079bf;
+              color: #fff;
+  
+              &:hover {
+                background-color: #005f8a; /* Darker shade on hover */
+              }
+            }
+  
+            .button-delete {
+              background-color: #d50000;
+              color: #fff;
+  
+              &:hover {
+                background-color: #c00000; /* Darker shade on hover */
+              }
+            }
+  
+            .button-view {
+              background-color: #5aac44;
+              color: #fff;
+  
+              &:hover {
+                background-color: #4a9f39; /* Darker shade on hover */
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  /* Modal Styles create */
+  .modal-create {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.623);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    padding: 10px;
-
-    width: auto;
-    height: 105px;
-
-    background-color: #062c80;
-    box-sizing: border-box;
-    
-    .group{
-        img{
-            height: 80px;
-        }
+  
+    .overlay-create {
+      position: absolute;
+      width: 100%;
+      height: 100%;
     }
-}
+  
+    .modal-content-create {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      position: relative;
+      max-width: 500px; /* Limit modal width */
+      width: 100%; /* Responsive width */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  
+      .close-button-create {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 20px; /* Adjust size as needed */
+        color: #d50000; /* Close button color */
+      }
+    }
+  }
+  
+  @media (max-width: 475px) {
+    .header-board {
+      .group-board,
+      .search-board,
+      .user-board {
+        display: none;
+      }
+      .toggle-board {
+        display: block;
+      }
+      .dropdown-board {
+        display: block;
+        position: absolute;
+        right: 10px; /* Added px */
+        top: 100px;
+        width: 400px;
+        background-color: #062c80;
+      }
+    }
+  }
+  
