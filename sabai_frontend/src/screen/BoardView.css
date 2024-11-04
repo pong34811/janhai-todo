@@ -16,6 +16,7 @@
     .group-board {
       display: flex;
       align-items: center;
+      padding: 20px;
   
       .btn-modal {
         padding: 10px 15px;
@@ -25,7 +26,7 @@
         border-radius: 5px;
         cursor: pointer;
         font-size: 16px;
-        margin-right: 20px; /* Added margin for spacing */
+        
         transition: background-color 0.3s, transform 0.2s;
   
         &:hover {
@@ -319,11 +320,13 @@
         display: block;
       }
       .dropdown-board {
-        display: block;
+        display: flex;
+        width: 100%;
+        right: 0px;
         position: absolute;
-        right: 10px; /* Added px */
-        top: 100px;
-        width: 400px;
+        justify-content: center;
+        align-items: center;
+
         background-color: #062c80;
       }
     }
