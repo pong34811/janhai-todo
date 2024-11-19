@@ -7,6 +7,7 @@ import BoardView from "../screen/BoardView";
 import HeaderView from '../screen/HeaderView';
 import ProtectedRoute from './ProtectedRoute';
 import RegisterView from '../screen/RegisterView';
+import ListView from '../screen/ListView';
 
 
 
@@ -23,9 +24,12 @@ function CustomRoute() {
           <Route index element={<HomeView />} />
         </Route>
 
-        <Route path="/boards" element={<ProtectedRoute />} >
-          <Route index element={<BoardView />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/boards" element={<BoardView />} />
+          <Route path="/lists/:id" element={<ListView />} />
         </Route>
+
+        {/* <Route path="/lists/:id" element={<ListView />} /> */}
         
         <Route path="*" element={<NoPage404 />} />
       </Routes>
