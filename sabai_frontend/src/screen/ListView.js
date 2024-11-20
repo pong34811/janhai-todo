@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { URL_AUTH } from '../routes/CustomAPI';
 
 const ListView = () => {
-  const { id } = useParams(); // ดึง ID จาก URL
+  const { id } = useParams();
   const [lists, setLists] = useState([]);
 
   useEffect(() => {
     const fetchLists = async () => {
-      const token = localStorage.getItem('token'); // ดึง token จาก localStorage
+      const token = localStorage.getItem('token');
       try {
-        const response = await axios.get(`http://localhost:8000/api/lists/?board=${id}`, {
-          headers: { Authorization: `Bearer ${token}` }, // ส่ง token ใน headers
+        const response = await axios.get(`${URL_AUTH.ListsAPI}?board=${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
         setLists(response.data);
       } catch (error) {
