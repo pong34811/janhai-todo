@@ -10,8 +10,8 @@ from rest_framework_simplejwt.views import (
 # Create a router and register your viewsets
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
-router.register(r'boards', BoardViewSet)
-router.register(r'lists', ListViewSet)
+router.register(r'boards', BoardViewSet ,basename='boards')
+router.register(r'lists', ListViewSet ,basename='lists')
 
 urlpatterns = [
     path('api/', include(router.urls)),  # Include all router URLs under /api/
