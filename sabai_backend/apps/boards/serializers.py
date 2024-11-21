@@ -10,16 +10,13 @@ class ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = List
         fields = ['id', 'board', 'title', 'order']
+        read_only_fields = ['id']
 
     def create(self, validated_data):
-        list_instance = List(**validated_data)
-        list_instance.save()
-        return list_instance
+        return List.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
-        order = validated_data.get('order')
-        if order is not None:
-            instance.order = order
+        instance.order = validated_data.get('order', instance.order)
         instance.save()
         return instance
