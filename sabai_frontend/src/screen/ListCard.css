@@ -1,0 +1,68 @@
+/* ListCard specific styles */
+.list-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    width: 300px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .list-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .list-header h3 {
+    font-weight: 500;
+    color: #1f2937;
+    margin: 0;
+  }
+  
+  .edit-list-title input {
+    width: calc(100% - 2rem);
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    margin-right: 10px;
+  }
+  
+  .edit-list-title button {
+    padding: 6px 12px;
+    background-color: #4c8bf5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .edit-list-title button:hover {
+    background-color: #3578e5;
+  }
+  
+  .list-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .list-actions svg {
+    cursor: pointer;
+    font-size: 18px;
+    color: #4b5563;
+  }
+  
+  .list-actions svg:hover {
+    color: #3b82f6;
+  }
+  
+  
