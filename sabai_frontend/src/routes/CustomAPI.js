@@ -4,4 +4,5 @@ export const URL_AUTH = {
     BoardAPI: "http://localhost:8000/api/boards/",
     ListsAPI: "http://localhost:8000/api/lists/",
     ReorderListsAPI: "http://localhost:8000/api/lists/reorder/",
+    TasksAPI :"http://localhost:8000/api/tasks/",
 };
