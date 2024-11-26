@@ -1,272 +1,122 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { FiPlus } from "react-icons/fi";
+import ListCard from "./ListCard";
 import { URL_AUTH } from "../routes/CustomAPI";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { FiPlus, FiMoreHorizontal, FiEdit, FiTrash2 } from "react-icons/fi";
 import "./ListView.css";
 
 const ListView = () => {
   const { id: boardId } = useParams();
   const [lists, setLists] = useState([]);
-  const [listTitle, setListTitle] = useState("");
   const [isAddingList, setIsAddingList] = useState(false);
-  const [activeOptionsId, setActiveOptionsId] = useState(null);
-  const [editingListId, setEditingListId] = useState(null);
-  const [editTitle, setEditTitle] = useState("");
+  const [listTitle, setListTitle] = useState("");
 
-  const fetchLists = useCallback(async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
+  // Fetch lists from API
+  const fetchLists = async () => {
     try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Authentication token missing");
+
       const { data } = await axios.get(`${URL_AUTH.ListsAPI}?board=${boardId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const sortedLists = data.sort((a, b) => a.order - b.order);
-      setLists(sortedLists);
+      setLists(data.sort((a, b) => a.order - b.order));
     } catch (error) {
-      console.error("Error fetching lists:", error);
-    }
-  }, [boardId]);
-
-  useEffect(() => {
-    fetchLists();
-  }, [fetchLists]);
-
-  const reorderLists = async (newLists) => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const updatePromises = newLists.map((list, index) =>
-        axios.patch(
-          `${URL_AUTH.ListsAPI}${list.id}/`,
-          { order: index + 1 },
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
-      );
-
-      await Promise.all(updatePromises);
-    } catch (error) {
-      console.error("Error reordering lists:", error);
+      console.error("Error fetching lists:", error.message || error.response?.data);
     }
   };
 
-  const onDragEnd = (result) => {
-    const { destination, source } = result;
+  useEffect(() => fetchLists(), [boardId]);
 
+  // Handle drag and drop logic
+  const onDragEnd = async ({ destination, source, type }) => {
     if (!destination) return;
 
-    const reorderedLists = Array.from(lists);
-    const [removed] = reorderedLists.splice(source.index, 1);
-    reorderedLists.splice(destination.index, 0, removed);
+    const updatedLists = [...lists];
+    const movedTask = type === "task" ? updatedLists.find(list => list.id === +source.droppableId.split('-')[1])?.tasks.splice(source.index, 1) : null;
 
-    setLists(reorderedLists); // Optimistic update
-    reorderLists(reorderedLists); // Sync with backend
+    if (type === "list" && source.index !== destination.index) {
+      const [movedList] = updatedLists.splice(source.index, 1);
+      updatedLists.splice(destination.index, 0, movedList);
+      setLists(updatedLists);
+      await updateListOrder(updatedLists);
+    } else if (movedTask) {
+      const destListId = +destination.droppableId.split('-')[1];
+      const destList = updatedLists.find(list => list.id === destListId);
+      destList.tasks.splice(destination.index, 0, movedTask[0]);
+      setLists(updatedLists);
+      await updateTaskPosition(movedTask[0].id, destListId, destination.index);
+    }
+  };
+
+  const updateListOrder = async (lists) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    await Promise.all(
+      lists.map((list, index) =>
+        axios.patch(`${URL_AUTH.ListsAPI}${list.id}/`, { order: index + 1 }, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      )
+    );
+  };
+
+  const updateTaskPosition = async (taskId, listId, order) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    await axios.patch(`${URL_AUTH.TasksAPI}${taskId}/`, { list: listId, order: order + 1 }, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
   };
 
   const addList = async () => {
     if (!listTitle.trim()) return;
 
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
     try {
-      const { data } = await axios.post(
-        URL_AUTH.ListsAPI,
-        {
-          title: listTitle,
-          board: boardId,
-          order: lists.length + 1,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Authentication token missing");
 
-      setLists((prev) => [...prev, data]);
-      resetListInput();
+      const { data } = await axios.post(URL_AUTH.ListsAPI, {
+        title: listTitle, board: boardId, order: lists.length + 1
+      }, { headers: { Authorization: `Bearer ${token}` } });
+      
+      setLists(prev => [...prev, data]);
+      setListTitle("");
+      setIsAddingList(false);
     } catch (error) {
-      console.error("Error adding list:", error);
+      console.error("Error adding list:", error.message || error.response?.data);
     }
   };
-
-  const updateList = async () => {
-    if (!editTitle.trim()) return;
-
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const { data } = await axios.patch(
-        `${URL_AUTH.ListsAPI}${editingListId}/`,
-        { title: editTitle },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      setLists((prev) =>
-        prev.map((list) => (list.id === editingListId ? data : list))
-      );
-      resetEditMode();
-    } catch (error) {
-      console.error("Error updating list:", error);
-    }
-  };
-
-  const deleteList = async (listId) => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      await axios.delete(`${URL_AUTH.ListsAPI}${listId}/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setLists((prev) => prev.filter((list) => list.id !== listId));
-      setActiveOptionsId(null);
-    } catch (error) {
-      console.error("Error deleting list:", error);
-    }
-  };
-
-  const resetListInput = () => {
-    setListTitle("");
-    setIsAddingList(false);
-  };
-
-  const resetEditMode = () => {
-    setEditingListId(null);
-    setEditTitle("");
-    setActiveOptionsId(null);
-  };
-
-  const toggleOptionsMenu = (listId) => {
-    setActiveOptionsId((prev) => (prev === listId ? null : listId));
-  };
-
-  const startEditing = (list) => {
-    setEditingListId(list.id);
-    setEditTitle(list.title);
-    setActiveOptionsId(null);
-  };
-
-  const MemoizedList = useMemo(() => {
-    return lists.map((list, index) => (
-      <Draggable key={list.id} draggableId={list.id.toString()} index={index}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            className={`list-card ${
-              snapshot.isDragging ? "react-beautiful-dnd-draggable--isDragging" : ""
-            }`}
-          >
-            <div className="list-header">
-              {editingListId === list.id ? (
-                <div className="edit-input-group">
-                  <input
-                    type="text"
-                    value={editTitle}
-                    onChange={(e) => setEditTitle(e.target.value)}
-                    className="input-title"
-                    autoFocus
-                  />
-                  <div className="edit-button-group">
-                    <button onClick={updateList} className="button-save">
-                      Save
-                    </button>
-                    <button onClick={resetEditMode} className="button-cancel">
-                      ✕
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <h3 className="list-title">{list.title}</h3>
-                  <div className="list-options-container">
-                    <button
-                      className="options-button"
-                      onClick={() => toggleOptionsMenu(list.id)}
-                    >
-                      <FiMoreHorizontal />
-                    </button>
-                    {activeOptionsId === list.id && (
-                      <div className="options-popover">
-                        <button
-                          onClick={() => startEditing(list)}
-                          className="popover-option"
-                        >
-                          <FiEdit /> Edit
-                        </button>
-                        <button
-                          onClick={() => deleteList(list.id)}
-                          className="popover-option delete"
-                        >
-                          <FiTrash2 /> Delete
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
-            <button className="add-card-button">
-              <FiPlus />
-              <span>Add a card</span>
-            </button>
-          </div>
-        )}
-      </Draggable>
-    ));
-  }, [lists, editingListId, activeOptionsId, editTitle]);
 
   return (
     <div id="list-view">
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="lists" direction="horizontal">
+        <Droppable droppableId="lists" direction="horizontal" type="list">
           {(provided) => (
-            <div
-              id="lists-container"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {MemoizedList}
+            <div ref={provided.innerRef} {...provided.droppableProps} id="lists-container">
+              {lists.map((list, index) => (
+                <ListCard key={list.id} list={list} index={index} />
+              ))}
               {provided.placeholder}
-  
-              {!isAddingList && (
-                <button
-                  onClick={() => setIsAddingList(true)}
-                  className="add-list-button"
-                >
-                  <FiPlus />
-                  <span>Add another list</span>
-                </button>
-              )}
-              {isAddingList && (
+              {isAddingList ? (
                 <div className="list-card list-input">
                   <input
-                    type="text"
                     value={listTitle}
                     onChange={(e) => setListTitle(e.target.value)}
                     placeholder="Enter list title..."
-                    className="input-title"
                     autoFocus
                   />
-                  <div className="button-group">
-                    <button onClick={addList} className="button-add">
-                      Add list
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsAddingList(false);
-                        setListTitle("");
-                      }}
-                      className="button-cancel"
-                    >
-                      ✕
-                    </button>
-                  </div>
+                  <button onClick={addList}>Add</button>
+                  <button onClick={() => setIsAddingList(false)}>Cancel</button>
                 </div>
+              ) : (
+                <button className="add-list-button" onClick={() => setIsAddingList(true)}>
+                  <FiPlus /> Add List
+                </button>
               )}
             </div>
           )}
@@ -274,7 +124,6 @@ const ListView = () => {
       </DragDropContext>
     </div>
   );
-  
 };
 
 export default ListView;
