@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from apps.users.views import CustomTokenObtainPairView, UserViewSet
-from apps.boards.views import BoardViewSet ,ListViewSet
+from apps.boards.views import BoardViewSet ,ListViewSet ,TaskViewSet
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -12,6 +12,7 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'boards', BoardViewSet ,basename='boards')
 router.register(r'lists', ListViewSet ,basename='lists')
+router.register(r'tasks', TaskViewSet, basename='task')
 
 urlpatterns = [
     path('api/', include(router.urls)),  # Include all router URLs under /api/
