@@ -17,11 +17,9 @@ const Login = () => {
         password,
       });
       const { access, refresh, user } = response.data;
-      // เก็บ token ใน localStorage
       localStorage.setItem("token", access);
-      localStorage.setItem("username", user.username); // เก็บ username
-
-      navigate("/boards"); // Redirect to boards page
+      localStorage.setItem("username", user.username);
+      navigate("/boards"); 
     } catch (error) {
       console.error(error);
     }

@@ -1,0 +1,218 @@
+/* Header Styling */
+.header-board {
+  display: grid;
+  grid-template-areas: "img-board nav-board";
+  background-color: #062c80;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  position: sticky;
+}
+
+.img-board {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 10px;
+}
+
+.nav-board {
+  grid-area: nav-board;
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  align-items: center;
+  justify-content: end;
+  padding: 10px;
+  gap: 25px;
+  h3 {
+    color: #fff;
+  }
+}
+
+.nav-board button,
+.nav-board a {
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-size: 14px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.nav-board button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.nav-board a {
+  color: white;
+  text-decoration: none;
+  background-color: #0261a4;
+}
+
+.nav-board a:hover {
+  background-color: #004b87;
+  transform: scale(1.05);
+}
+
+/* Toggle Header */
+.toggle-header {
+  display: none;
+}
+
+/* Create & Logout Buttons */
+.create-btn,
+.logout-btn {
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  height: 45px;
+}
+
+.create-btn {
+  background: linear-gradient(90deg, #0aee3f 0%, #6ffa8d 100%);
+}
+
+.logout-btn {
+  background: linear-gradient(90deg, #ff0019 0%, #c82333 100%);
+}
+
+.create-btn:hover {
+  background: linear-gradient(90deg, #218838 0%, #28a745 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(90deg, #c82333 0%, #dc3545 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logout-btn:disabled,
+.create-btn:disabled {
+  background: linear-gradient(90deg, #e0e0e0 0%, #d3d3d3 100%);
+  color: #888;
+  cursor: not-allowed;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* ใช้การจัดตำแหน่งแบบเริ่มต้น */
+  background-color: #e0e7ff; /* พื้นหลังที่มีสีฟ้าครามนุ่มๆ */
+  border-radius: 30px; /* เพิ่มความโค้งมน */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  height: 45px;
+  width: auto; /* ปรับให้พอดีกับเนื้อหาภายใน */
+  font-family: "Arial", sans-serif; /* ใช้ฟอนต์ที่ดูเรียบหรู */
+  font-size: 16px;
+  color: #333; /* สีตัวอักษรที่อ่านง่าย */
+  transition: all 0.3s ease-in-out; /* เพิ่มการเปลี่ยนแปลงที่เรียบเนียน */
+  padding-left: 15px;
+  padding-right: 20px;
+}
+
+.user-profile p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* เพิ่มช่องว่างระหว่างไอคอนและข้อความ */
+}
+
+.user-profile:hover {
+  transform: scale(1.1); /* ขยายขนาดเล็กน้อยเมื่อ hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* เพิ่มเงาให้ดูน่าสนใจ */
+  background-color: #c6d9ff; /* เปลี่ยนพื้นหลังเมื่อ hover */
+}
+
+.user-profile svg {
+  color: #4c6ef5; /* เปลี่ยนสีไอคอนให้สดใส */
+  font-size: 20px; /* ขยายขนาดไอคอน */
+}
+
+/* Search Input Styling */
+.search-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* จัดให้อยู่ในแนวนอน */
+  background-color: #f4f7fc;
+  border-radius: 25px;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  height: 45px;
+  position: relative; /* ให้ตำแหน่งของไอคอนอยู่ในตำแหน่งที่ถูกต้อง */
+}
+
+.search-input input {
+  max-width: 300px;
+  width: 100%; /* กำหนดให้ input ใช้พื้นที่ทั้งหมด */
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  color: #333;
+  font-size: 16px;
+  border-radius: 25px;
+  outline: none; /* เอาขอบตอนที่เลือกออก */
+  padding-left: 40px; /* เว้นที่ด้านซ้ายสำหรับไอคอน */
+  transition: all 0.3s ease;
+}
+
+/* ไอคอนค้นหา */
+.search-icon {
+  font-size: 22px;
+  color: #0261a4; /* สีของไอคอน */
+  position: absolute;
+  left: 15px; /* กำหนดตำแหน่งของไอคอนค้นหาทางซ้าย */
+}
+
+/* ตั้งค่าสไตล์สำหรับ placeholder */
+.search-input input::placeholder {
+  color: #8c8c8c; /* เปลี่ยนสีของ placeholder */
+  font-style: italic; /* ใช้ตัวเอียง */
+  font-size: 14px; /* เปลี่ยนขนาดฟอนต์ */
+}
+
+@media (max-width: 700px) {
+  .header-board {
+    grid-template-areas: "toggle-header" "nav-board";
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .img-board {
+    margin: auto;
+    border: 1px solid white;
+  }
+
+  .nav-board {
+    display: grid;
+    grid-template-columns: 1fr; /* Stack items vertically */
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Space between items */
+  }
+
+  .toggle-header {
+    display: block;
+    transition: all 0.3s ease;
+    background-color: #062c80; /* Match header background */
+    color: white;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid white; /* Border for better visibility */
+    margin-top: 15px;
+  }
+
+  .toggle-header:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Lighten on hover */
+  }
+}
