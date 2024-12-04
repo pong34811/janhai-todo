@@ -1,95 +1,151 @@
 /* Main Content */
-.main-board {
+.main-container {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
   padding: 2rem;
-  background-color: #f7f9fc;
-  margin: auto;
-}
-.main-title-board {
-  border-radius: 10px; 
-  padding: 30px; 
-  margin: auto; 
-  width: 100%;
-  text-align: center; 
-}
+  background-color: #f0ffff;
+  margin: 0;
 
-.main-title-board h1 {
-  font-size: 2.5rem; /* ขนาดตัวอักษรที่ใหญ่ขึ้น */
-  font-weight: 700; /* ตัวหนาเพื่อดึงดูดความสนใจ */
-  color: #333; /* สีตัวอักษรที่ชัดเจน */
-  margin-bottom: 15px; /* เพิ่มระยะห่างระหว่างหัวข้อกับเนื้อหา */
-}
+  .main-title-board {
+    margin: 0;
+    width: 100%;
 
-.main-title-board p {
-  font-size: 1.1rem; /* ขนาดตัวอักษรที่พอดีอ่านสบาย */
-  color: #666; /* สีตัวอักษรที่ไม่เข้มเกินไป */
-  line-height: 1.6; /* ระยะห่างระหว่างบรรทัดเพิ่มความอ่านง่าย */
-  margin-top: 0; /* ไม่ต้องการให้มีระยะห่างด้านบน */
-  margin-bottom: 20px; /* ระยะห่างด้านล่าง */
-  text-align: center; /* จัดข้อความให้เต็มบล็อก */
+    .h1-board {
+      text-align: center;
+      font-size: 2.5rem; /* เพิ่มขนาดให้ใหญ่ขึ้น */
+      color: #222; /* สีเข้มขึ้นเพื่ออ่านง่าย */
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* เพิ่มเงาเบาๆ */
+    }
+  }
 }
 
-.main-title-board p::before {
-  content: "💡 "; /* สัญลักษณ์ที่เพิ่มเข้าไปที่ต้นประโยคเพื่อดึงดูดความสนใจ */
-  font-size: 1.5rem; /* ขนาดที่ใหญ่กว่าตัวข้อความเพื่อความโดดเด่น */
-  color: #3498db; /* สีที่ทำให้ดูโดดเด่น */
-}
-
-
-.h1-board {
-  text-align: center;
-  font-size: 2.25rem; /* เพิ่มขนาดให้ใหญ่ขึ้น */
-  color: #333;
-  font-weight: bold;
-}
-
-.work-board {
+.work-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-}
+  height: 100%;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
 
-.ul-board {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 1.5rem;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-@media (max-width: 768px) {
   .ul-board {
-    grid-template-columns: repeat(1, 1fr); /* เปลี่ยนเป็น 2 คอลัมน์ */
-  }
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 
-  .li-board {
-    padding: 1rem;
-  }
+    @media (max-width: 1536px) {
+      grid-template-columns: repeat(4, auto);
+    }
+  
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(3, auto);
+    }
 
-  .h1-board {
-    font-size: 1.5rem;
-  }
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, auto);
+    }
+  
+    @media (max-width: 494px) {
+      grid-template-columns: repeat(1, auto);
+    }
 
-  .button-edit, .button-delete, .button-view {
-    padding: 0.5rem;
-    font-size: 0.875rem;
-  }
-  .main-title-board{
-    width: 95%;
-    padding: 0px;
-  }
-}
+    .li-board {
+      background: linear-gradient(135deg, #ffffff, #f8f9fa);
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
 
-@media (max-width: 480px) {
-  .ul-board {
-    grid-template-columns: 1fr; /* แสดงคอลัมน์เดียว */
-  }
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+      }
 
-  .h1-board {
-    font-size: 1.25rem;
+      .title-card-board {
+        margin-bottom: 12px;
+
+        h3 {
+          font-size: 20px;
+          color: #333;
+          margin: 0;
+          font-weight: 600;
+          text-align: center;
+        }
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+      }
+      
+      input[type="text"]:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+      }
+
+      .button-card-board {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+          border: none;
+          padding: 10px 15px;
+          border-radius: 8px;
+          font-size: 14px;
+          cursor: pointer;
+          transition: background-color 0.2s, transform 0.2s;
+          font-weight: bold;
+          flex-grow: 1;
+          margin: 0 5px;
+
+          &:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+          }
+
+          &.button-edit-board {
+            background-color: #007bff;
+            color: #fff;
+
+            &:hover:not(:disabled) {
+              background-color: #0056b3;
+            }
+          }
+
+          &.button-delete-board {
+            background-color: #dc3545;
+            color: #fff;
+
+            &:hover:not(:disabled) {
+              background-color: #a71d2a;
+            }
+          }
+
+          &.button-view-board {
+            background-color: #28a745;
+            color: #fff;
+
+            &:hover:not(:disabled) {
+              background-color: #1e7e34;
+            }
+          }
+        }
+      }
+    }
   }
 }

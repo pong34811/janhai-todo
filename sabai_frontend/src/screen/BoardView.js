@@ -13,6 +13,9 @@ import { debounce } from "lodash"; // import debounce from lodash
 import "./BoardView.css";
 import "./HeaderBoard.css";
 import "./MessageBoard.css";
+import "./CreateModalBoard.css";
+import "./ConfirmDeleteModal.css"
+
 
 const Boards = () => {
   const [boards, setBoards] = useState([]);
@@ -225,31 +228,34 @@ const Boards = () => {
       </header>
 
       <main>
-        <div className="main-board">
+        <div className="main-container">
           <div className="main-title-board">
             <h1>My Board Overview</h1>
             <p>
-              "ที่นี่คุณสามารถดูและจัดการบอร์ดทั้งหมดของคุณได้ในที่เดียว
+              💡"ที่นี่คุณสามารถดูและจัดการบอร์ดทั้งหมดของคุณได้ในที่เดียว
               จัดระเบียบ ติดตามความคืบหน้า
               และทำงานร่วมกันในโปรเจกต์ของคุณได้อย่างสะดวกและมีประสิทธิภาพ."
             </p>
           </div>
-          <div className="work-board">
+          <div className="work-container">
             <ul className="ul-board">
               {boards.map(({ id, title, created_at, updated_at }) => (
                 <li className="li-board" key={id}>
-                  <div className="title-board">
-                    {editBoard?.id === id ? (
-                      <input
-                        type="text"
-                        value={editBoardTitle}
-                        onChange={(e) => setEditBoardTitle(e.target.value)}
-                      />
-                    ) : (
+                  {editBoard?.id === id ? (
+                    <input
+                     
+                      type="text"
+                      value={editBoardTitle}
+                      onChange={(e) => setEditBoardTitle(e.target.value)}
+                    />
+                  ) : (
+                    <div className="title-card-board">
                       <h3>Project: {title}</h3>
-                    )}
+                    </div>
+                  )}
+                  <div className="button-card-board">
                     <button
-                      className="button-edit"
+                      className="button-edit-board"
                       onClick={() =>
                         editBoard?.id === id
                           ? handleBoardAction()
@@ -261,14 +267,14 @@ const Boards = () => {
                       {editBoard?.id === id ? "Save" : "Edit"}
                     </button>
                     <button
-                      className="button-delete"
+                      className="button-delete-board"
                       onClick={() => setConfirmDeleteId(id)}
                       disabled={loading}
                     >
                       Delete
                     </button>
                     <button
-                      className="button-view"
+                      className="button-view-board"
                       onClick={() => navigate(`/lists/${id}`)}
                       disabled={loading}
                     >
@@ -283,8 +289,8 @@ const Boards = () => {
       </main>
 
       {createModal && (
-        <div className="modal-1">
-          <div className="modal-content-1">
+        <div className="modal-create-board">
+          <div className="modal-content">
             <h2>Create a New Board</h2>
             <input
               type="text"
@@ -293,8 +299,9 @@ const Boards = () => {
               onChange={(e) => setNewBoardTitle(e.target.value)}
             />
             <div className="modal-footer">
-              <button onClick={toggleModal}>Cancel</button>
+              <button className="cancel-modal-board" onClick={toggleModal}>Cancel</button>
               <button
+                className="create-modal-board"
                 onClick={createBoard}
                 disabled={loading || !newBoardTitle.trim()}
               >
@@ -305,36 +312,14 @@ const Boards = () => {
         </div>
       )}
       {confirmDeleteId && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              background: "#fff",
-              padding: "20px",
-              borderRadius: "8px",
-              textAlign: "center",
-              width: "300px",
-              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
-            }}
-          >
+        <div className="confirm-delete-modal">
+          <div className="confirm-delete-container">
             <h2>Confirm Delete</h2>
             <p>Are you sure you want to delete this board?</p>
-            <button onClick={() => handleDeleteBoard(confirmDeleteId)}>
+            <button className="confirm-modal-board" onClick={() => handleDeleteBoard(confirmDeleteId)}>
               Yes, delete
             </button>
-            <button onClick={handleCloseModal}>Cancel</button>
+            <button className="cancel-modal-board" onClick={handleCloseModal}>Cancel</button>
           </div>
         </div>
       )}
