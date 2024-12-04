@@ -1,0 +1,118 @@
+/* โมดอลพื้นหลัง */
+.modal-create-board {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* พื้นหลังโปร่งใส */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* เนื้อหาโมดอล */
+.modal-content {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  width: 350px;
+  max-width: 90%; /* ปรับให้พอดีกับหน้าจอเล็ก */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out; /* เพิ่มเอฟเฟกต์ */
+}
+
+/* หัวข้อในโมดอล */
+.modal-content h2 {
+  font-size: 1.5rem;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+/* อินพุตสำหรับกรอกข้อมูล */
+.modal-content input[type="text"] {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* เอฟเฟกต์เมื่อโฟกัส */
+.modal-content input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+/* ส่วนล่างของโมดอล */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+/* ปุ่ม Cancel */
+.cancel-modal-board {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #ff0000;
+  color: #ffffff;
+  transition: background-color 0.3s, transform 0.2s;
+  font-weight: bold;
+}
+
+.cancel-modal-board:hover {
+  background-color: #d6d6d6;
+}
+
+.cancel-modal-board:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ปุ่ม Create */
+.create-modal-board {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  transition: background-color 0.3s, transform 0.2s;
+  font-weight: bold;
+}
+
+.create-modal-board:hover:not(:disabled) {
+  background-color: #1e7e34;
+}
+
+.create-modal-board:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* เอฟเฟกต์การแสดงโมดอล */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
