@@ -3,6 +3,7 @@ from apps.boards.models import Board, List ,Task
 
 
 class BoardAdmin(admin.ModelAdmin):
+    search_fields = ('title',)
     list_display = ('title', 'user', 'created_at', 'updated_at', 'created_by', 'updated_by')
     list_editable = ('user',)
     ordering = ('-created_at',) 
