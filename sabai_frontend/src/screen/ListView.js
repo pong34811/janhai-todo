@@ -7,7 +7,7 @@ import ListCard from "./ListCard";
 import { URL_AUTH } from "../routes/CustomAPI";
 import "./ListView.css";
 import { Link, useNavigate } from "react-router-dom";
-
+import { jwtDecode } from "jwt-decode";
 import { AiOutlineUser } from "react-icons/ai";
 
 const ListView = () => {
@@ -18,6 +18,7 @@ const ListView = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [user, setUser] = useState({});
+  const [boards, setBoards] = useState([]);
 
   const navigate = useNavigate();
 
@@ -142,14 +143,32 @@ const ListView = () => {
     localStorage.removeItem("username");
     navigate("/login");
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userId = jwtDecode(token).user_id;
+
+      // ดึงข้อมูลบอร์ดจาก API
+      axios
+        .get(`${URL_AUTH.BoardAPI}?user=${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          setBoards(response.data); // เก็บข้อมูลบอร์ด
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching boards:", error);
+          setLoading(false);
+        });
+    }
+  }, []);
 
   return (
     <>
       <header className="header-board">
         <nav className="nav-board-1">
-          <Link to="/">
-            <img className="img-board" src="/logo.png" alt="Logo" />
-          </Link>
+          <img className="img-board" src="/logo.png" alt="Logo" />
         </nav>
         <nav className="nav-board">
           <div className="user-profile">
@@ -167,7 +186,34 @@ const ListView = () => {
           </button>
         </nav>
       </header>
-      <div id="list-view">
+
+      <div className="list-view">
+        <aside className="sidenav">
+        <h3 className="sidenav-subtitle">My Menu</h3>
+          <ul className="sidenav-menu">
+            <li>
+              <Link to="/">
+                <i className="fas fa-tachometer-alt"></i> Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="/settings">
+                <i className="fas fa-cog"></i> Settings
+              </Link>
+            </li>
+          </ul>
+          <h3 className="sidenav-subtitle">My Boards</h3>
+          <ul className="sidenav-menu">
+            {boards.map((board) => (
+              <li key={board.id}>
+                <Link to={`/lists/${board.id}`}>
+                  <i className="fas fa-clipboard"></i> {board.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </aside>
+
         {loading && <div className="loading-spinner">Loading...</div>}
         {error && <div className="error-message">{error}</div>}
 
@@ -178,6 +224,7 @@ const ListView = () => {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 id="lists-container"
+                className="lists-container"
               >
                 {lists.map((list, index) => (
                   <ListCard
@@ -192,14 +239,19 @@ const ListView = () => {
                 {isAddingList ? (
                   <div className="add-list-card">
                     <input
-                     className="list-card-input"
+                      className="list-card-input"
                       value={listTitle}
                       onChange={(e) => setListTitle(e.target.value)}
                       placeholder="Enter list title..."
                       autoFocus
                     />
-                    <button className="list-card-add" onClick={addList}>Save</button>
-                    <button className="list-card-cancel" onClick={() => setIsAddingList(false)}>
+                    <button className="list-card-add" onClick={addList}>
+                      Save
+                    </button>
+                    <button
+                      className="list-card-cancel"
+                      onClick={() => setIsAddingList(false)}
+                    >
                       Cancel
                     </button>
                   </div>

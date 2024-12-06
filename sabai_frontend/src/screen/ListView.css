@@ -1,290 +1,258 @@
 /* Root styles */
-#list-view {
-    width: 100vh;
-    height: 100vh;
-    background: linear-gradient(to bottom, #1e3a8a, #3b82f6); /* เพิ่มความรู้สึกไหลลื่น */
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* Lists container */
-  #lists-container {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth; /* เพิ่มการ scroll ที่ลื่น */
-  
-    /* เมื่อมีการเลื่อน */
-    &::-webkit-scrollbar {
-      height: 8px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-    }
-  }
-  
-  /* List card */
-  .list-card {
-    background-color: white;
-    border-radius: 12px; /* เพิ่มมุมโค้งที่นุ่มนวล */
+.list-view {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(to bottom, #1e3a8a, #3b82f6);
+  overflow-x: hidden; /* ปิดการ scroll แนวนอน */
+  position: relative;
 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease, transform 0.2s ease;
-    cursor: pointer;
-  
-    &:hover {
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-      transform: translateY(-3px);
-    }
-  
-    /* List title */
-    .list-title {
-      font-weight: 600;
-      font-size: 20px;
-      color: #1f2937;
-      text-transform: capitalize;
-      margin-bottom: 12px;
-    }
-  
-    /* Options button */
-    .options-button {
-      color: #4b5563;
-      background: none;
-      border: none;
-      cursor: pointer;
-      transition: color 0.2s ease, transform 0.2s ease;
-  
-      &:hover {
-        color: #3b82f6;
-        transform: scale(1.1); /* ขยายขนาดเมื่อ hover */
-      }
-    }
-  
-    /* Add card button */
-    .add-card-button {
-      background-color: #4c8bf5;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 14px;
-      text-align: center;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-  
-      &:hover {
-        background-color: #3578e5;
-        transform: translateY(-3px);
-      }
-  
-      &:active {
-        transform: translateY(1px);
-      }
-    }
+  box-sizing: border-box;
+  display: flex;
+}
+
+.lists-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-behavior: smooth; /* เพิ่มการ scroll ที่ลื่น */
+  padding: 10px;
+}
+
+/* List card */
+.list-card {
+  background-color: white;
+  border-radius: 12px; /* เพิ่มมุมโค้งที่นุ่มนวล */
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
   }
-  
-  /* Add list button */
-  .add-list-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 100px;
-    height: 30px;
-    background-color: rgba(255, 255, 255, 0.7);
-    color: #1e3a8a;
-    border: none; 
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    font-weight: bold;
-    font-size: 15px;
-    margin-top: 10px;
-  }
-  
-  /* Input styles */
-  .input-title,
-  .add-card-form input {
-    width: 100%;
-    padding: 14px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  
-    &:focus {
-      border-color: #4c8bf5;
-      box-shadow: 0 0 8px rgba(76, 139, 245, 0.4);
-    }
-  }
-  
-  /* Button group */
-  .button-group {
-    display: flex;
-    gap: 10px;
-  }
-  
-  /* Add and cancel buttons */
-  .button-add {
-    background-color: #3b82f6;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 8px;
-    cursor: pointer;
+
+  /* List title */
+  .list-title {
     font-weight: 600;
+    font-size: 20px;
+    color: #1f2937;
+    text-transform: capitalize;
+    margin-bottom: 12px;
+  }
+
+  /* Options button */
+  .options-button {
+    color: #4b5563;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      color: #3b82f6;
+      transform: scale(1.1); /* ขยายขนาดเมื่อ hover */
+    }
+  }
+
+  /* Add card button */
+  .add-card-button {
+    background-color: #4c8bf5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-  
+
     &:hover {
       background-color: #3578e5;
       transform: translateY(-3px);
     }
-  
+
     &:active {
       transform: translateY(1px);
     }
   }
-  
-  .button-cancel {
-    background-color: #ef4444;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  
-    &:hover {
-      background-color: #d32f2f;
-      transform: translateY(-3px);
-    }
-  }
-  .add-list-card{
-    display: flex;
-    margin: 0;
-    background-color: #ffffff;
-    border-radius: 8px;
+}
 
-    height: 50px;
-    padding: 15px;
+/* Add list button */
+.add-list-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 100px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #1e3a8a;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+/* Input styles */
+.input-title,
+.add-card-form input {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    border-color: #4c8bf5;
+    box-shadow: 0 0 8px rgba(76, 139, 245, 0.4);
   }
-  .list-card-input{
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-right: 10px;
+}
+
+/* Button group */
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* Add and cancel buttons */
+.button-add {
+  background-color: #3b82f6;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #3578e5;
+    transform: translateY(-3px);
   }
-  .list-card-add{
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 2px;
+
+  &:active {
+    transform: translateY(1px);
   }
-  .list-card-cancel{
-    background-color: #dc3545;
-    color: #ffffff;
-    padding: 10px 15px;
-    border: none;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
+}
+
+.button-cancel {
+  background-color: #ef4444;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #d32f2f;
+    transform: translateY(-3px);
   }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    #lists-container {
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-  
-    .list-card {
-      width: 100%;
-      margin-bottom: 15px;
-    }
-  
-    /* เปลี่ยนขนาดปุ่ม */
-    .add-list-button,
-    .add-card-button {
-      width: 100%;
-    }
-  
-    .input-title,
-    .list-card-input {
-      font-size: 14px;
-    }
-  }
-/* Root styles */
-#list-view {
-    min-height: 100vh;
-    width: 100%;
-    background: linear-gradient(to bottom, #1e3a8a, #3b82f6); /* เพิ่มความรู้สึกไหลลื่น */
-    overflow-x: hidden; /* ปิดการ scroll แนวนอน */
-    position: relative;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* Lists container */
-  #lists-container {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    overflow-x: auto;
-    scroll-behavior: smooth; /* เพิ่มการ scroll ที่ลื่น */
-    /* เมื่อมีการเลื่อน */
-    &::-webkit-scrollbar {
-      height: 8px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-    }
-  }
-  
- 
-  @media (max-width: 768px) {
-    .list-card-container {
-      width: 100%; /* ใช้พื้นที่เต็มความกว้างของหน้าจอ */
-      margin: 4px; /* ลดระยะขอบ */
-      padding: 6px; /* ลด padding */
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* ลดเงา */
-    }
-  
-    .list-header {
-      flex-direction: column; /* จัดเรียงในแนวตั้ง */
-      align-items: flex-start; /* จัดให้อยู่ด้านซ้าย */
-      gap: 8px; /* เพิ่มช่องว่างระหว่างรายการ */
-    }
-  
-    .list-header p {
-      font-size: 14px; /* ลดขนาดตัวอักษร */
-      width: auto; /* ปรับขนาดข้อความให้เหมาะสม */
-    }
-  
-    .list-header svg {
-      margin-left: 0; /* ลบระยะห่างด้านซ้าย */
-    }
-  
-    .list-edit {
-      flex-direction: column; /* จัดเรียงในแนวตั้ง */
-      gap: 4px; /* ลดช่องว่างระหว่างรายการ */
-      padding: 6px; /* ลด padding */
-    }
-  
-    .list-edit input {
-      font-size: 12px; /* ลดขนาดตัวอักษร */
-      padding: 6px; /* ลด padding */
-    }
-  
-    .list-edit button {
-      font-size: 12px; /* ลดขนาดตัวอักษร */
-      padding: 6px 10px; /* ลด padding */
-    }
-  }
-  
+}
+.add-list-card {
+  display: flex;
+  margin: 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+
+  height: 50px;
+  padding: 15px;
+}
+.list-card-input {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+.list-card-add {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 2px;
+}
+.list-card-cancel {
+  background-color: #dc3545;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.sidenav {
+  max-width: 280px;
+  width: 100%;
+  background: linear-gradient(180deg, #002366, #0047ab);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  font-family: 'Arial', sans-serif;
+}
+
+.sidenav-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.sidenav-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.sidenav-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidenav-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidenav-menu li {
+  margin: 15px 0;
+}
+
+.sidenav-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+  border-radius: 8px;
+}
+
+.sidenav-menu a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+.sidenav-subtitle {
+  font-size: 1.2rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sidenav-menu .active {
+  background: rgba(255, 255, 255, 0.3);
+  font-weight: bold;
+}
+
