@@ -14,8 +14,7 @@ import "./BoardView.css";
 import "./HeaderBoard.css";
 import "./MessageBoard.css";
 import "./CreateModalBoard.css";
-import "./ConfirmDeleteModal.css"
-
+import "./ConfirmDeleteModal.css";
 
 const Boards = () => {
   const [boards, setBoards] = useState([]);
@@ -239,50 +238,58 @@ const Boards = () => {
           </div>
           <div className="work-container">
             <ul className="ul-board">
-              {boards.map(({ id, title, created_at, updated_at }) => (
-                <li className="li-board" key={id}>
-                  {editBoard?.id === id ? (
-                    <input
-                     
-                      type="text"
-                      value={editBoardTitle}
-                      onChange={(e) => setEditBoardTitle(e.target.value)}
-                    />
-                  ) : (
-                    <div className="title-card-board">
-                      <h3>Project: {title}</h3>
+              {boards.length === 0 ? (
+                <div className="no-boards-message">
+                  <p>
+                    ไม่พบข้อมูลในระบบ กรุณาทำการกดปุ่ม Create เพื่อสร้าง Board
+                    ของคุณด้วยค่ะ
+                  </p>
+                </div>
+              ) : (
+                boards.map(({ id, title, created_at, updated_at }) => (
+                  <li className="li-board" key={id}>
+                    {editBoard?.id === id ? (
+                      <input
+                        type="text"
+                        value={editBoardTitle}
+                        onChange={(e) => setEditBoardTitle(e.target.value)}
+                      />
+                    ) : (
+                      <div className="title-card-board">
+                        <h3>Project: {title}</h3>
+                      </div>
+                    )}
+                    <div className="button-card-board">
+                      <button
+                        className="button-edit-board"
+                        onClick={() =>
+                          editBoard?.id === id
+                            ? handleBoardAction()
+                            : (setEditBoard({ id, title }),
+                              setEditBoardTitle(title))
+                        }
+                        disabled={loading}
+                      >
+                        {editBoard?.id === id ? "Save" : "Edit"}
+                      </button>
+                      <button
+                        className="button-delete-board"
+                        onClick={() => setConfirmDeleteId(id)}
+                        disabled={loading}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="button-view-board"
+                        onClick={() => navigate(`/lists/${id}`)}
+                        disabled={loading}
+                      >
+                        View
+                      </button>
                     </div>
-                  )}
-                  <div className="button-card-board">
-                    <button
-                      className="button-edit-board"
-                      onClick={() =>
-                        editBoard?.id === id
-                          ? handleBoardAction()
-                          : (setEditBoard({ id, title }),
-                            setEditBoardTitle(title))
-                      }
-                      disabled={loading}
-                    >
-                      {editBoard?.id === id ? "Save" : "Edit"}
-                    </button>
-                    <button
-                      className="button-delete-board"
-                      onClick={() => setConfirmDeleteId(id)}
-                      disabled={loading}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="button-view-board"
-                      onClick={() => navigate(`/lists/${id}`)}
-                      disabled={loading}
-                    >
-                      View
-                    </button>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                ))
+              )}
             </ul>
           </div>
         </div>
@@ -299,7 +306,9 @@ const Boards = () => {
               onChange={(e) => setNewBoardTitle(e.target.value)}
             />
             <div className="modal-footer">
-              <button className="cancel-modal-board" onClick={toggleModal}>Cancel</button>
+              <button className="cancel-modal-board" onClick={toggleModal}>
+                Cancel
+              </button>
               <button
                 className="create-modal-board"
                 onClick={createBoard}
@@ -316,10 +325,15 @@ const Boards = () => {
           <div className="confirm-delete-container">
             <h2>Confirm Delete</h2>
             <p>Are you sure you want to delete this board?</p>
-            <button className="confirm-modal-board" onClick={() => handleDeleteBoard(confirmDeleteId)}>
+            <button
+              className="confirm-modal-board"
+              onClick={() => handleDeleteBoard(confirmDeleteId)}
+            >
               Yes, delete
             </button>
-            <button className="cancel-modal-board" onClick={handleCloseModal}>Cancel</button>
+            <button className="cancel-modal-board" onClick={handleCloseModal}>
+              Cancel
+            </button>
           </div>
         </div>
       )}

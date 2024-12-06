@@ -1,85 +1,74 @@
-/* ListCard specific styles */
-.list-card {
-  background-color: #ffffff; /* ใช้สีขาวสะอาด */
-  border-radius: 12px; /* เพิ่มมุมโค้งให้มากขึ้น */
-  padding: 16px; /* เพิ่ม padding ให้กว้างขึ้นเล็กน้อย */
-  margin: 12px 0;
-  width: 320px; /* เพิ่มความกว้างให้ดูสมดุล */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้ดูนุ่มนวล */
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+.list-card-container {
+  background-color: #f4f5f7;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin: 8px;
+  padding: 8px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease-in-out;
 }
 
-.list-card:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* เงาที่ชัดขึ้นเมื่อ hover */
-  transform: translateY(-2px); /* ขยับขึ้นเล็กน้อย */
+.list-card-container:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* List header */
 .list-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 12px 0; /* ลด padding ด้านบน-ล่าง */
-  border-bottom: 1px solid #e5e7eb; /* เพิ่มเส้นแบ่งเพื่อแยกส่วนหัว */
+  justify-content: space-between;
+  padding: 0 8px;
+  margin-bottom: 20px;
 }
 
-.list-header h3 {
-  font-weight: 600; /* เปลี่ยนเป็น bold */
-  font-size: 18px; /* ขยายขนาดฟอนต์เล็กน้อย */
-  color: #1f2937;
-  margin: 0;
-}
-
-/* Edit list title input */
-.edit-list-title input {
-  width: 100%;
-  padding: 12px;
+.list-header p {
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  width: 100px;
+  word-wrap: break-word; /* แยกคำขึ้นบรรทัดใหม่เมื่อเกิน */
+  white-space: normal; /* อนุญาตให้มีหลายบรรทัด */
 }
 
-.edit-list-title input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 6px rgba(59, 130, 246, 0.4); /* เพิ่มแสงที่ขอบเมื่อ focus */
-}
-
-/* Edit list title button */
-.edit-list-title button {
-  padding: 10px 16px;
-  background-color: #4c8bf5;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
+.list-header svg {
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #6b778c;
+  margin-left: 8px;
+  transition: color 0.2s;
 }
 
-.edit-list-title button:hover {
-  background-color: #3578e5;
-  transform: translateY(-2px);
+.list-header svg:hover {
+  color: #172b4d;
 }
 
-/* List actions */
-.list-actions {
+.list-edit {
   display: flex;
-  gap: 12px;
-  margin-top: 10px;
-  justify-content: flex-end; /* ให้ actions ชิดขวา */
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
 }
 
-.list-actions svg {
+.list-edit input {
+  flex: 1;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.list-edit button {
+  background-color: #5aac44;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
   cursor: pointer;
-  font-size: 20px; /* เพิ่มขนาดของไอคอน */
-  color: #6b7280; /* ใช้สีที่ดูซอฟต์ */
-  transition: color 0.3s ease, transform 0.2s ease;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
-.list-actions svg:hover {
-  color: #2563eb; /* สีฟ้าสดใส */
-  transform: scale(1.2); /* ขยายไอคอนเมื่อ hover */
+.list-edit button:hover {
+  background-color: #519839;
 }

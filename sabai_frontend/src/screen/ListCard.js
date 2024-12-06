@@ -13,11 +13,15 @@ const ListCard = ({ list, index, setLists }) => {
   const updateList = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.patch(`${URL_AUTH.ListsAPI}${list.id}/`, { title: editTitle }, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await axios.patch(
+        `${URL_AUTH.ListsAPI}${list.id}/`,
+        { title: editTitle },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-      setLists(prev => prev.map(l => (l.id === list.id ? data : l)));
+      setLists((prev) => prev.map((l) => (l.id === list.id ? data : l)));
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating list:", error);
@@ -31,7 +35,7 @@ const ListCard = ({ list, index, setLists }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setLists(prev => prev.filter(l => l.id !== list.id));
+      setLists((prev) => prev.filter((l) => l.id !== list.id));
     } catch (error) {
       console.error("Error deleting list:", error);
     }
@@ -40,7 +44,12 @@ const ListCard = ({ list, index, setLists }) => {
   return (
     <Draggable draggableId={`list-${list.id}`} index={index}>
       {(provided) => (
-        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="list-card">
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className="list-card-container"
+        >
           {isEditing ? (
             <div className="list-edit">
               <input
@@ -53,8 +62,10 @@ const ListCard = ({ list, index, setLists }) => {
             </div>
           ) : (
             <div className="list-header">
-              <span>{list.title}</span>
-              <div className="list-actions">
+              <div className="list-header-title">
+                <p>{list.title}</p>
+              </div>
+              <div>
                 <FiEdit onClick={() => setIsEditing(true)} />
                 <FiTrash2 onClick={deleteList} />
               </div>

@@ -6,6 +6,9 @@ import { FiPlus } from "react-icons/fi";
 import ListCard from "./ListCard";
 import { URL_AUTH } from "../routes/CustomAPI";
 import "./ListView.css";
+import { Link, useNavigate } from "react-router-dom";
+
+import { AiOutlineUser } from "react-icons/ai";
 
 const ListView = () => {
   const { id: boardId } = useParams();
@@ -14,15 +17,21 @@ const ListView = () => {
   const [listTitle, setListTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState({});
+
+  const navigate = useNavigate();
 
   const fetchLists = useCallback(async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Authentication token missing");
 
-      const { data } = await axios.get(`${URL_AUTH.ListsAPI}?board=${boardId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await axios.get(
+        `${URL_AUTH.ListsAPI}?board=${boardId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setLists(data.sort((a, b) => a.order - b.order));
     } catch (err) {
       setError(`Error fetching lists: ${err.message || err.response?.data}`);
@@ -32,6 +41,7 @@ const ListView = () => {
   }, [boardId]);
 
   useEffect(() => {
+    setUser({ username: localStorage.getItem("username") });
     fetchLists();
   }, [fetchLists]);
 
@@ -39,11 +49,12 @@ const ListView = () => {
     if (!destination) return;
 
     const updatedLists = [...lists];
-    const movedTask = type === "task"
-      ? updatedLists
-          .find((list) => list.id === +source.droppableId.split("-")[1])
-          ?.tasks.splice(source.index, 1)
-      : null;
+    const movedTask =
+      type === "task"
+        ? updatedLists
+            .find((list) => list.id === +source.droppableId.split("-")[1])
+            ?.tasks.splice(source.index, 1)
+        : null;
 
     if (type === "list" && source.index !== destination.index) {
       const [movedList] = updatedLists.splice(source.index, 1);
@@ -77,14 +88,16 @@ const ListView = () => {
   const updateTaskPosition = async (taskId, listId, order, taskTitle) => {
     const token = localStorage.getItem("token");
     if (!token) {
-      console.error("Authentication token missing");
       return;
     }
 
     try {
-      const { data: currentTask } = await axios.get(`${URL_AUTH.TasksAPI}${taskId}/`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const { data: currentTask } = await axios.get(
+        `${URL_AUTH.TasksAPI}${taskId}/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       const updatedTitle = taskTitle || currentTask.title;
       if (!updatedTitle) throw new Error("Task title cannot be empty");
@@ -124,53 +137,86 @@ const ListView = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    navigate("/login");
+  };
+
   return (
-    <div id="list-view">
-      {loading && <div className="loading-spinner">Loading...</div>}
-      {error && <div className="error-message">{error}</div>}
+    <>
+      <header className="header-board">
+        <nav className="nav-board-1">
+          <Link to="/">
+            <img className="img-board" src="/logo.png" alt="Logo" />
+          </Link>
+        </nav>
+        <nav className="nav-board">
+          <div className="user-profile">
+            <p>
+              <AiOutlineUser />: {user.username}
+            </p>
+          </div>
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="lists" direction="horizontal" type="list">
-          {(provided) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              id="lists-container"
-            >
-              {lists.map((list, index) => (
-                <ListCard
-                  key={list.id}
-                  list={list}
-                  index={index}
-                  setLists={setLists}
-                />
-              ))}
-              {provided.placeholder}
+          <button
+            className="logout-btn"
+            onClick={handleLogout}
+            disabled={loading}
+          >
+            {loading ? "Logging out..." : "Logout"}
+          </button>
+        </nav>
+      </header>
+      <div id="list-view">
+        {loading && <div className="loading-spinner">Loading...</div>}
+        {error && <div className="error-message">{error}</div>}
 
-              {isAddingList ? (
-                <div className="list-card list-input">
-                  <input
-                    value={listTitle}
-                    onChange={(e) => setListTitle(e.target.value)}
-                    placeholder="Enter list title..."
-                    autoFocus
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="lists" direction="horizontal" type="list">
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                id="lists-container"
+              >
+                {lists.map((list, index) => (
+                  <ListCard
+                    key={list.id}
+                    list={list}
+                    index={index}
+                    setLists={setLists}
                   />
-                  <button onClick={addList}>Add</button>
-                  <button onClick={() => setIsAddingList(false)}>Cancel</button>
-                </div>
-              ) : (
-                <button
-                  className="add-list-button"
-                  onClick={() => setIsAddingList(true)}
-                >
-                  <FiPlus /> Add List
-                </button>
-              )}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+                ))}
+                {provided.placeholder}
+
+                {isAddingList ? (
+                  <div className="add-list-card">
+                    <input
+                     className="list-card-input"
+                      value={listTitle}
+                      onChange={(e) => setListTitle(e.target.value)}
+                      placeholder="Enter list title..."
+                      autoFocus
+                    />
+                    <button className="list-card-add" onClick={addList}>Save</button>
+                    <button className="list-card-cancel" onClick={() => setIsAddingList(false)}>
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className="add-list-button"
+                    onClick={() => setIsAddingList(true)}
+                  >
+                    <FiPlus /> Add List
+                  </button>
+                )}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
+    </>
   );
 };
 

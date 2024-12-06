@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { URL_AUTH } from "../routes/CustomAPI";
@@ -8,6 +8,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [message, setmessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,14 +20,28 @@ const Login = () => {
       const { access, refresh, user } = response.data;
       localStorage.setItem("token", access);
       localStorage.setItem("username", user.username);
-      navigate("/boards"); 
-    } catch (error) {
-      console.error(error);
+      navigate("/boards");
+    } catch  {
+      setmessage("กรอกกรุณาตรวจสอบข้อมูล User เเละ Password ใหม่ ?");
     }
   };
 
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setmessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   return (
     <>
+      {message && (
+        <div className="message-box">
+          <p>{message}</p>
+        </div>
+      )}
       <main>
         <div className="container-login">
           <div className="header-login">
