@@ -28,6 +28,7 @@ const Boards = () => {
   const [IsNavVisible, setIsNavVisible] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setmessage] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -181,6 +182,9 @@ const Boards = () => {
 
   const toggleModal = () => setCreateModal((prev) => !prev);
   const toggleNav = () => setIsNavVisible(!IsNavVisible);
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
 
   return (
     <>
@@ -206,10 +210,20 @@ const Boards = () => {
                 onChange={debouncedSearch}
               />
             </div>
-            <div className="user-profile">
-              <p>
-                <AiOutlineUser />: {user.username}
-              </p>
+            <div className="user-profile-list">
+              <div className="dropdown">
+                <button className="dropdown-toggle" onClick={toggleDropdown}>
+                  <AiOutlineUser /> : {user.username}
+                </button>
+                {dropdownOpen && (
+                  <ul className="dropdown-menu">
+                    <li onClick={() => navigate("/settings")}>Setting</li>
+                    <li onClick={() => navigate("/change-password")}>
+                      Change Password
+                    </li>
+                  </ul>
+                )}
+              </div>
             </div>
 
             <button
