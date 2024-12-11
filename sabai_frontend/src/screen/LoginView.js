@@ -21,7 +21,7 @@ const Login = () => {
       localStorage.setItem("token", access);
       localStorage.setItem("username", user.username);
       navigate("/boards");
-    } catch  {
+    } catch {
       setmessage("กรอกกรุณาตรวจสอบข้อมูล User เเละ Password ใหม่ ?");
     }
   };
@@ -71,9 +71,11 @@ const Login = () => {
                   required
                 />
                 <p>
-                  Not a member? <Link to="/register">Register</Link>
+                  No account? <Link to="/register">Register</Link> or{" "}
+                  <Link to="/reset-password">Forget password</Link>.
                 </p>
               </div>
+
               <div className="form-button-login">
                 <button type="submit">Login</button>
               </div>

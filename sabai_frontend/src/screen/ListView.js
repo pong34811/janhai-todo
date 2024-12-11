@@ -19,6 +19,8 @@ const ListView = () => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState({});
   const [boards, setBoards] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -164,17 +166,33 @@ const ListView = () => {
     }
   }, []);
 
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
   return (
     <>
       <header className="header-board">
         <nav className="nav-board-1">
-          <img className="img-board" src="/logo.png" alt="Logo" />
+          <Link to= "/boards">
+            <img className="img-board" src="/logo.png" alt="Logo" />
+          </Link>
         </nav>
         <nav className="nav-board">
-          <div className="user-profile">
-            <p>
-              <AiOutlineUser />: {user.username}
-            </p>
+        <div className="user-profile-list">
+            <div className="dropdown">
+              <button className="dropdown-toggle" onClick={toggleDropdown}>
+                <AiOutlineUser /> : {user.username}
+              </button>
+              {dropdownOpen && (
+                <ul className="dropdown-menu">
+                  <li onClick={() => navigate("/settings")}>Setting</li>
+                  <li onClick={() => navigate("/change-password")}>
+                    Change Password
+                  </li>
+                </ul>
+              )}
+            </div>
           </div>
 
           <button
@@ -189,19 +207,6 @@ const ListView = () => {
 
       <div className="list-view">
         <aside className="sidenav">
-        <h3 className="sidenav-subtitle">My Menu</h3>
-          <ul className="sidenav-menu">
-            <li>
-              <Link to="/">
-                <i className="fas fa-tachometer-alt"></i> Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link to="/settings">
-                <i className="fas fa-cog"></i> Settings
-              </Link>
-            </li>
-          </ul>
           <h3 className="sidenav-subtitle">My Boards</h3>
           <ul className="sidenav-menu">
             {boards.map((board) => (
