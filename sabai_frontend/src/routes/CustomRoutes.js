@@ -1,32 +1,38 @@
 import React from "react";
-import { BrowserRouter, Routes, Route ,Navigate  } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginView from "../screen/LoginView";
 import HomeView from "../screen/HomeView";
 import NoPage404 from "../screen/NoPage404";
 import BoardView from "../screen/BoardView";
 import HeaderView from "../screen/HeaderView";
-import ProtectedRoute, { isAuthenticated } from "./ProtectedRoute"; 
+import ProtectedRoute, { isAuthenticated } from "./ProtectedRoute";
 import RegisterView from "../screen/RegisterView";
 import ListView from "../screen/ListView";
-
-
+import ResetPassword from "../screen/ResetPassword";
+import ConfirmResetPassword from "../screen/ConfirmResetPassword";
+import ListsettingsViews from "../screen/ListsettingsViews";
 
 function CustomRoute() {
   return (
     <BrowserRouter>
       <Routes>
         {/* Public Routes */}
-
         <Route path="/login" element={!isAuthenticated() ? <LoginView /> : <Navigate to="/boards" />} />
         <Route path="/register" element={!isAuthenticated() ? <RegisterView /> : <Navigate to="/boards" />} />
         <Route path="/" element={isAuthenticated() ? <Navigate to="/boards" /> : <HeaderView />}>
           <Route index element={isAuthenticated() ? <Navigate to="/boards" /> : <HomeView />} />
         </Route>
 
+        {/* Password Reset Routes */}
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/reset-confirm/:uid/:token" element={<ConfirmResetPassword />} />
+        {/* <Route path="/reset-confirm/" element={<ConfirmResetPassword />} /> */}
+
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/boards" element={<BoardView />} />
           <Route path="/lists/:id" element={<ListView />} />
+          <Route path="/lists/:id/settings" element={<ListsettingsViews />} />
         </Route>
 
         {/* 404 Not Found */}
