@@ -1,79 +1,116 @@
 /* Header Styling */
 .header-board {
-  display: grid;
-  grid-template-areas: "img-board nav-board";
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
   background-color: #062c80;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  position: sticky;
 }
 
 .img-board {
-  width: 80px;
+  max-width: 80px;
+  width: 100%;
   height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 10px;
 }
 
+
+/* Navigation Bar List */
 .nav-board {
-  grid-area: nav-board;
-  display: grid;
-  grid-template-columns: repeat(5, auto);
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: end;
-  padding: 10px;
-  gap: 25px;
-  h3 {
-    color: #fff;
+
+
+  /* User Profile List */
+  .user-profile-list {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* ใช้การจัดตำแหน่งแบบเริ่มต้น */
+    background-color: #e0e7ff; /* พื้นหลังที่มีสีฟ้าครามนุ่มๆ */
+    border-radius: 30px; /* เพิ่มความโค้งมน */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #333; /* สีตัวอักษรที่อ่านง่าย */
+    transition: all 0.3s ease-in-out; /* เพิ่มการเปลี่ยนแปลงที่เรียบเนียน */
+    height: 45px;
+    padding: 0px 15px;
+    margin-right: 10px;
+
+
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #c6d9ff; /* เปลี่ยนสีพื้นหลังเมื่อ hover */
+    }
+
+    /* Dropdown Container */
+    .dropdown {
+      position: relative;
+
+      .dropdown-toggle {
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: inherit;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        margin: 0;
+
+
+        &:hover {
+          color: #007bff;
+        }
+      }
+
+      /* Dropdown Menu */
+      .dropdown-menu {
+        position: absolute;
+        top: 45px;
+        left: -50px;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        list-style: none;
+        padding: 10px;
+        margin: 0;
+        z-index: 1000; /* ให้ dropdown อยู่ข้างบน */
+        min-width: 150px; /* เพิ่มขนาดความกว้าง */
+        font-size: 15px;
+
+        /* Dropdown Items */
+        li {
+          padding: 8px 16px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #f0f0f0;
+          }
+        }
+      }
+    }
   }
 }
 
-.nav-board button,
-.nav-board a {
-  padding: 10px 18px;
-  border-radius: 25px;
-  font-size: 14px;
-  border: none;
-  transition: all 0.3s ease;
-}
 
-.nav-board button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-}
 
-.nav-board a {
-  color: white;
-  text-decoration: none;
-  background-color: #0261a4;
-}
-
-.nav-board a:hover {
-  background-color: #004b87;
-  transform: scale(1.05);
-}
-
-/* Toggle Header */
-.toggle-header {
-  display: none;
-}
 
 /* Create & Logout Buttons */
 .create-btn,
 .logout-btn {
   color: white;
   border: none;
-  padding: 12px 30px;
+  padding: 0px 20px;
   border-radius: 30px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
   height: 45px;
+  margin-right: 10px;
 }
 
 .create-btn {
@@ -103,40 +140,6 @@
   cursor: not-allowed;
 }
 
-.user-profile {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* ใช้การจัดตำแหน่งแบบเริ่มต้น */
-  background-color: #e0e7ff; /* พื้นหลังที่มีสีฟ้าครามนุ่มๆ */
-  border-radius: 30px; /* เพิ่มความโค้งมน */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  height: 45px;
-  width: auto; /* ปรับให้พอดีกับเนื้อหาภายใน */
-  font-family: "Arial", sans-serif; /* ใช้ฟอนต์ที่ดูเรียบหรู */
-  font-size: 16px;
-  color: #333; /* สีตัวอักษรที่อ่านง่าย */
-  transition: all 0.3s ease-in-out; /* เพิ่มการเปลี่ยนแปลงที่เรียบเนียน */
-  padding-left: 15px;
-  padding-right: 20px;
-}
-
-.user-profile p {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px; /* เพิ่มช่องว่างระหว่างไอคอนและข้อความ */
-}
-
-.user-profile:hover {
-  transform: scale(1.1); /* ขยายขนาดเล็กน้อยเมื่อ hover */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* เพิ่มเงาให้ดูน่าสนใจ */
-  background-color: #c6d9ff; /* เปลี่ยนพื้นหลังเมื่อ hover */
-}
-
-.user-profile svg {
-  color: #4c6ef5; /* เปลี่ยนสีไอคอนให้สดใส */
-  font-size: 20px; /* ขยายขนาดไอคอน */
-}
 
 /* Search Input Styling */
 .search-input {
@@ -149,6 +152,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   height: 45px;
   position: relative; /* ให้ตำแหน่งของไอคอนอยู่ในตำแหน่งที่ถูกต้อง */
+  margin-right: 10px;
 }
 
 .search-input input {
@@ -180,16 +184,19 @@
   font-size: 14px; /* เปลี่ยนขนาดฟอนต์ */
 }
 
+
+/* Toggle Header */
+.toggle-header {
+  display: none;
+}
+
+
+
 @media (max-width: 700px) {
   .header-board {
-    grid-template-areas: "toggle-header" "nav-board";
-    justify-content: center;
-    padding: 10px;
-  }
+    display: flex;
+    flex-direction: column;
 
-  .img-board {
-    margin: auto;
-    border: 1px solid white;
   }
 
   .nav-board {
@@ -201,15 +208,25 @@
   }
 
   .toggle-header {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
     transition: all 0.3s ease;
-    background-color: #062c80; /* Match header background */
+    background-color: #121b2e; /* Match header background */
     color: white;
-    padding: 12px;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     border: 1px solid white; /* Border for better visibility */
-    margin-top: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    max-width: 215px;
+    width: 100%;
+    height: 45px;
+
+
+
   }
 
   .toggle-header:hover {
