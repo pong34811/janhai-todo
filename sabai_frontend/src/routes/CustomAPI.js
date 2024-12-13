@@ -7,4 +7,5 @@ export const URL_AUTH = {
     TasksAPI: "http://localhost:8000/api/tasks/",
     PasswordResetAPI: "http://localhost:8000/api/password_reset/",
     PasswordResetConfirmAPI: "http://localhost:8000/api/password_reset/confirm/", 
+    UsersAPI: "http://localhost:8000/api/users/", // เพิ่ม URL สำหรับ Users
 };
