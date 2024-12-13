@@ -27,10 +27,16 @@ const Boards = () => {
   const [user, setUser] = useState({});
   const [createModal, setCreateModal] = useState(false);
   const [SettingsModel, setSettingsModel] = useState(false);
+  const [ChangePasswordModal, setChangePasswordModal] = useState(false);
   const [IsNavVisible, setIsNavVisible] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setmessage] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    old_password: "",
+    new_password: "",
+    confirm_password: "",
+  });
   const navigate = useNavigate();
 
   //ฟังก์ชัน ดึงข้อมูล API Boards ดึง user_id จาก token
@@ -57,7 +63,7 @@ const Boards = () => {
     fetchBoards();
   }, [fetchBoards]);
 
-  // ดึงข้อมูลผู้ใช้จาก API // ดึง user_id จาก token
+  // ดึงข้อมูลผู้ใช้จาก API fetchUserDetails // ดึง user_id จาก token
   const fetchUserDetails = useCallback(async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -71,7 +77,6 @@ const Boards = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(data); // เก็บข้อมูลผู้ใช้ที่ทำการล็อกอิน
-      setmessage("User data loaded successfully!");
     } catch (error) {
       setmessage("Failed to load user data. Please try again.");
     }
@@ -91,6 +96,16 @@ const Boards = () => {
       return () => clearTimeout(timer);
     }
   }, [message]);
+
+  //ฟังก์ชัน setTimeout
+  useEffect(() => {
+    if (dropdownOpen) {
+      const timer = setTimeout(() => {
+        setDropdownOpen(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [dropdownOpen]);
 
   const debouncedSearch = debounce((e) => {
     setSearchQuery(e.target.value);
@@ -207,11 +222,13 @@ const Boards = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    sessionStorage.clear();
     navigate("/login");
   };
 
   const toggleModal = () => setCreateModal((prev) => !prev);
   const ModalSettingsModel = () => setSettingsModel((prev) => !prev);
+  const showChangePasswordModal = () => setChangePasswordModal((prev) => !prev);
 
   const toggleNav = () => setIsNavVisible(!IsNavVisible);
   const toggleDropdown = () => {
@@ -238,6 +255,55 @@ const Boards = () => {
       setmessage("User data updated successfully!");
     } catch (error) {
       setmessage("Failed to update user data. Please try again.");
+    }
+  };
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    setmessage(""); // เคลียร์ข้อความเก่า
+
+    // Validate passwords match
+    if (passwordData.new_password !== passwordData.confirm_password) {
+      setmessage("New passwords do not match");
+      return;
+    }
+
+    const token = localStorage.getItem("token"); // ดึง access_token จาก localStorage
+    if (!token) {
+      setmessage("Authentication failed. Please log in again.");
+      return; // ออกจากฟังก์ชันถ้าไม่มี Token
+    }
+
+    try {
+      const response = await axios.post(
+        URL_AUTH.ChangePasswordAPI, // ใช้ URL ที่ปรับปรุงใน CustomAPI.js
+        {
+          old_password: passwordData.old_password,
+          new_password: passwordData.new_password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // ส่ง Token สำหรับการยืนยันตัวตน
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setmessage("Password changed successfully");
+        setPasswordData({
+          old_password: "",
+          new_password: "",
+          confirm_password: "",
+        });
+        showChangePasswordModal(); // ปิด Modal หลังจากเปลี่ยนรหัสสำเร็จ
+      }
+    } catch (error) {
+      // แสดงข้อความ error จาก response
+      setmessage(
+        error.response?.data?.old_password ||
+          error.response?.data?.new_password ||
+          "Failed to change password"
+      );
     }
   };
 
@@ -274,9 +340,7 @@ const Boards = () => {
                 {dropdownOpen && (
                   <ul className="dropdown-menu">
                     <li onClick={ModalSettingsModel}>Setting</li>
-                    <li onClick={() => navigate("/change-password")}>
-                      Change Password
-                    </li>
+                    <li onClick={showChangePasswordModal}>Change Password</li>
                   </ul>
                 )}
               </div>
@@ -475,6 +539,82 @@ const Boards = () => {
               </button>
             </form>
             <button className="close-settings-btn" onClick={ModalSettingsModel}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+      {ChangePasswordModal && (
+        <div className="SettingsModel-container">
+          <div className="SettingsModel-Model">
+            <div className="header-settings">
+              <h2>Change Password</h2>
+            </div>
+            <form onSubmit={handlePasswordChange} className="settings-form">
+              {message && (
+                <div
+                  className="message"
+                  style={{ color: "red", marginBottom: "10px" }}
+                >
+                  {message}
+                </div>
+              )}
+              <div className="form-group">
+                <label htmlFor="old_password">Current Password</label>
+                <input
+                  type="password"
+                  id="old_password"
+                  value={passwordData.old_password}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      old_password: e.target.value,
+                    })
+                  }
+                  placeholder="Enter current password"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="new_password">New Password</label>
+                <input
+                  type="password"
+                  id="new_password"
+                  value={passwordData.new_password}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      new_password: e.target.value,
+                    })
+                  }
+                  placeholder="Enter new password"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="confirm_password">Confirm New Password</label>
+                <input
+                  type="password"
+                  id="confirm_password"
+                  value={passwordData.confirm_password}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      confirm_password: e.target.value,
+                    })
+                  }
+                  placeholder="Confirm new password"
+                  required
+                />
+              </div>
+              <button type="submit" className="update-btn">
+                Change Password
+              </button>
+            </form>
+            <button
+              className="close-settings-btn"
+              onClick={showChangePasswordModal}
+            >
               Close
             </button>
           </div>
