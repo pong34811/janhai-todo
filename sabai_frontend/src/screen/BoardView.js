@@ -15,6 +15,7 @@ import "./HeaderBoard.css";
 import "./MessageBoard.css";
 import "./CreateModalBoard.css";
 import "./ConfirmDeleteModal.css";
+import "./SettingsModel.css";
 
 const Boards = () => {
   const [boards, setBoards] = useState([]);
@@ -25,13 +26,14 @@ const Boards = () => {
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [user, setUser] = useState({});
   const [createModal, setCreateModal] = useState(false);
+  const [SettingsModel, setSettingsModel] = useState(false);
   const [IsNavVisible, setIsNavVisible] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setmessage] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const navigate = useNavigate();
 
+  //ฟังก์ชัน ดึงข้อมูล API Boards ดึง user_id จาก token
   const fetchBoards = useCallback(async () => {
     const token = localStorage.getItem("token");
     const userId = jwtDecode(token).user_id;
@@ -50,10 +52,37 @@ const Boards = () => {
     }
   }, [navigate, searchQuery]);
 
+  // เรียกใช้ fetchBoards เมื่อ component โหลด
   useEffect(() => {
     fetchBoards();
   }, [fetchBoards]);
 
+  // ดึงข้อมูลผู้ใช้จาก API // ดึง user_id จาก token
+  const fetchUserDetails = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setmessage("Authentication failed. Please log in again.");
+      return navigate("/login");
+    }
+
+    try {
+      const { user_id } = jwtDecode(token); // ดึง user_id จาก token
+      const { data } = await axios.get(`${URL_AUTH.UsersAPI}${user_id}/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUser(data); // เก็บข้อมูลผู้ใช้ที่ทำการล็อกอิน
+      setmessage("User data loaded successfully!");
+    } catch (error) {
+      setmessage("Failed to load user data. Please try again.");
+    }
+  }, [navigate]);
+
+  // เรียกใช้ fetchUserDetails เมื่อ component โหลด
+  useEffect(() => {
+    fetchUserDetails();
+  }, [fetchUserDetails]);
+
+  //ฟังก์ชัน setTimeout
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
@@ -160,16 +189,17 @@ const Boards = () => {
     }
   };
 
-  const handleConfirmDelete = (id) => {
-    setConfirmDeleteId(id);
-  };
-
   const resetForm = () => {
     setNewBoardTitle("");
     setCreateModal(false);
     setEditBoardTitle("");
     setEditBoard(null);
   };
+
+  const handleConfirmDelete = (id) => {
+    setConfirmDeleteId(id);
+  };
+
   const handleCloseModal = () => {
     setConfirmDeleteId(null);
   };
@@ -181,9 +211,34 @@ const Boards = () => {
   };
 
   const toggleModal = () => setCreateModal((prev) => !prev);
+  const ModalSettingsModel = () => setSettingsModel((prev) => !prev);
+
   const toggleNav = () => setIsNavVisible(!IsNavVisible);
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
+  };
+
+  // ฟังก์ชันในการอัปเดตข้อมูลผู้ใช้
+  const handleUpdateUser = async (updatedData) => {
+    const token = localStorage.getItem("token");
+    if (!token) return navigate("/login");
+
+    const userId = jwtDecode(token).user_id;
+
+    try {
+      const { data } = await axios.put(
+        `${URL_AUTH.UsersAPI}${userId}/`,
+        updatedData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUser(data); // อัปเดตข้อมูลผู้ใช้ใน state
+      setSettingsModel(false);
+      setmessage("User data updated successfully!");
+    } catch (error) {
+      setmessage("Failed to update user data. Please try again.");
+    }
   };
 
   return (
@@ -213,11 +268,12 @@ const Boards = () => {
             <div className="user-profile-list">
               <div className="dropdown">
                 <button className="dropdown-toggle" onClick={toggleDropdown}>
-                  <AiOutlineUser /> : {user.username}
+                  <AiOutlineUser /> :{" "}
+                  {user.first_name ? user.first_name : user.username}
                 </button>
                 {dropdownOpen && (
                   <ul className="dropdown-menu">
-                    <li onClick={() => navigate("/settings")}>Setting</li>
+                    <li onClick={ModalSettingsModel}>Setting</li>
                     <li onClick={() => navigate("/change-password")}>
                       Change Password
                     </li>
@@ -225,7 +281,6 @@ const Boards = () => {
                 )}
               </div>
             </div>
-
             <button
               className="logout-btn"
               onClick={handleLogout}
@@ -347,6 +402,80 @@ const Boards = () => {
             </button>
             <button className="cancel-modal-board" onClick={handleCloseModal}>
               Cancel
+            </button>
+          </div>
+        </div>
+      )}
+      {SettingsModel && (
+        <div className="SettingsModel-container">
+          <div className="SettingsModel-Model">
+            <div className="header-settings">
+              <h2>Settings</h2>
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleUpdateUser(user);
+              }}
+              className="settings-form"
+            >
+              <div className="form-group">
+                <label htmlFor="first_name">First Name</label>
+                <input
+                  type="text"
+                  id="first_name"
+                  value={user.first_name || ""}
+                  onChange={(e) =>
+                    setUser({ ...user, first_name: e.target.value })
+                  }
+                  placeholder="First Name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="last_name">Last Name</label>
+                <input
+                  type="text"
+                  id="last_name"
+                  value={user.last_name || ""}
+                  onChange={(e) =>
+                    setUser({ ...user, last_name: e.target.value })
+                  }
+                  placeholder="Last Name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={user.email || ""}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <div>
+                  {" "}
+                  <label htmlFor="last_login">Last Login</label>
+                </div>
+
+                <input
+                  type="text"
+                  id="last_login"
+                  value={user.last_login || ""}
+                  disabled
+                  placeholder="Last Login"
+                />
+              </div>
+              <button type="submit" className="update-btn">
+                Update
+              </button>
+            </form>
+            <button className="close-settings-btn" onClick={ModalSettingsModel}>
+              Close
             </button>
           </div>
         </div>
