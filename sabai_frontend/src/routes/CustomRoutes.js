@@ -10,7 +10,6 @@ import RegisterView from "../screen/RegisterView";
 import ListView from "../screen/ListView";
 import ResetPassword from "../screen/ResetPassword";
 import ConfirmResetPassword from "../screen/ConfirmResetPassword";
-import ListsettingsViews from "../screen/ListsettingsViews";
 
 function CustomRoute() {
   return (
@@ -32,7 +31,6 @@ function CustomRoute() {
         <Route element={<ProtectedRoute />}>
           <Route path="/boards" element={<BoardView />} />
           <Route path="/lists/:id" element={<ListView />} />
-          <Route path="/lists/:id/settings" element={<ListsettingsViews />} />
         </Route>
 
         {/* 404 Not Found */}
