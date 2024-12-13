@@ -13,11 +13,15 @@ from django.contrib.auth.password_validation import validate_password
 
 # User serializer for registration
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    # ระบุฟิลด์ที่ต้องการ
+    first_name = serializers.CharField(required=False)  # First name
+    last_name = serializers.CharField(required=False)  # Last name
+    email = serializers.EmailField()  # Email
+    last_login = serializers.DateTimeField(read_only=True)  # Last login
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'last_login']
 
     def create(self, validated_data):
         user = User(**validated_data)
