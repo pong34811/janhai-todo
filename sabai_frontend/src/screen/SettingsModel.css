@@ -1,0 +1,103 @@
+.SettingsModel-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  .SettingsModel-Model {
+    background: #fff;
+    width: 100%;
+    max-width: 600px; /* Increased max-width for a better layout */
+    padding: 30px;
+    border-radius: 12px; /* Slightly rounded corners for a more modern look */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Softer, larger shadow for a cleaner look */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+  }
+
+  .header-settings {
+    text-align: center;
+    margin-bottom: 30px; /* Increase margin for spacing */
+  }
+
+  h2 {
+    font-size: 26px; /* Larger font for the title */
+    color: #333;
+    margin: 0; /* Remove unnecessary margin */
+    font-weight: bold; /* Make the title more prominent */
+  }
+
+  .settings-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px; /* Added space between form groups */
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Space between label and input */
+  }
+
+  label {
+    font-size: 16px;
+    color: #555;
+    font-weight: 500; /* Slightly bolder label for better readability */
+  }
+
+  input {
+    padding: 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f8f8f8; /* Lighter background for inputs */
+    transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transition on focus */
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #4caf50;
+    background-color: #fff; /* Light background on focus */
+  }
+
+  button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 6px; /* More rounded edges for buttons */
+  }
+
+  .update-btn {
+    background-color: #4caf50;
+    color: white;
+    font-weight: bold; /* Bold font for emphasis */
+  }
+
+  .update-btn:hover {
+    background-color: #45a049;
+  }
+
+  .close-settings-btn {
+    background-color: #f44336;
+    color: white;
+    font-weight: bold; /* Bold font for emphasis */
+    border-radius: 6px;
+    padding: 12px 25px;
+    margin-top: 20px; /* Added space from the update button */
+    width: 100%;
+  }
+
+  .close-settings-btn:hover {
+    background-color: #d32f2f;
+  }
+
+
+}
