@@ -19,9 +19,16 @@ const ListView = () => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState({});
   const [boards, setBoards] = useState([]);
+  const [message, setmessage] = useState("");
+  const [messageform, setmessageform] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-
+  const [SettingsModel, setSettingsModel] = useState(false);
+  const [ChangePasswordModal, setChangePasswordModal] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    old_password: "",
+    new_password: "",
+    confirm_password: "",
+  });
   const navigate = useNavigate();
 
   const fetchLists = useCallback(async () => {
@@ -143,6 +150,7 @@ const ListView = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    sessionStorage.clear();
     navigate("/login");
   };
   useEffect(() => {
@@ -168,28 +176,147 @@ const ListView = () => {
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
+
   };
+  const ModalSettingsModel = () => setSettingsModel((prev) => !prev);
+  const showChangePasswordModal = () => setChangePasswordModal((prev) => !prev);
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    setmessageform(""); // เคลียร์ข้อความเก่า
+
+    // Validate passwords match
+    if (passwordData.new_password !== passwordData.confirm_password) {
+      setmessageform("New passwords do not match");
+      return;
+    }
+
+    const token = localStorage.getItem("token"); // ดึง access_token จาก localStorage
+    if (!token) {
+      setmessageform("Authentication failed. Please log in again.");
+      return; // ออกจากฟังก์ชันถ้าไม่มี Token
+    }
+
+    try {
+      const response = await axios.post(
+        URL_AUTH.ChangePasswordAPI, // ใช้ URL ที่ปรับปรุงใน CustomAPI.js
+        {
+          old_password: passwordData.old_password,
+          new_password: passwordData.new_password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // ส่ง Token สำหรับการยืนยันตัวตน
+          },
+        }
+      );
+      setPasswordData({
+        old_password: "",
+        new_password: "",
+        confirm_password: "",
+      });
+      setChangePasswordModal(); // ปิด Modal หลังจากเปลี่ยนรหัสสำเร็จ
+      setmessage("Password changed successfully");
+    } catch (error) {
+      // แสดงข้อความ error จาก response
+      setmessageform(
+        error.response?.data?.old_password ||
+          error.response?.data?.new_password ||
+          "Failed to change password"
+      );
+    }
+  };
+
+  // ดึงข้อมูลผู้ใช้จาก API fetchUserDetails // ดึง user_id จาก token
+  const fetchUserDetails = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setmessage("Authentication failed. Please log in again.");
+      return navigate("/login");
+    }
+
+    try {
+      const { user_id } = jwtDecode(token); // ดึง user_id จาก token
+      const { data } = await axios.get(`${URL_AUTH.UsersAPI}${user_id}/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUser(data); // เก็บข้อมูลผู้ใช้ที่ทำการล็อกอิน
+    } catch (error) {
+      setmessage("Failed to load user data. Please try again.");
+    }
+  }, [navigate]);
+
+  // เรียกใช้ fetchUserDetails เมื่อ component โหลด
+  useEffect(() => {
+    fetchUserDetails();
+  }, [fetchUserDetails]);
+
+  // ฟังก์ชันในการอัปเดตข้อมูลผู้ใช้
+  const handleUpdateUser = async (updatedData) => {
+    const token = localStorage.getItem("token");
+    if (!token) return navigate("/login");
+
+    const userId = jwtDecode(token).user_id;
+
+    try {
+      const { data } = await axios.put(
+        `${URL_AUTH.UsersAPI}${userId}/`,
+        updatedData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUser(data); // อัปเดตข้อมูลผู้ใช้ใน state
+      setSettingsModel(false);
+      setmessage("User data updated successfully!");
+    } catch (error) {
+      setmessage("Failed to update user data. Please try again.");
+    }
+  };
+  //ฟังก์ชัน setTimeout
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setmessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  //ฟังก์ชัน setTimeout
+  useEffect(() => {
+    if (dropdownOpen) {
+      const timer = setTimeout(() => {
+        setDropdownOpen(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [dropdownOpen]);
 
   return (
     <>
+      {message && (
+        <div className="message-box">
+          <p>{message}</p>
+        </div>
+      )}
       <header className="header-board">
         <nav className="nav-board-1">
-          <Link to= "/boards">
+          <Link to="/boards">
             <img className="img-board" src="/logo.png" alt="Logo" />
           </Link>
         </nav>
         <nav className="nav-board">
-        <div className="user-profile-list">
+          <div className="user-profile-list">
             <div className="dropdown">
               <button className="dropdown-toggle" onClick={toggleDropdown}>
-                <AiOutlineUser /> : {user.username}
+                <AiOutlineUser /> :{" "}
+                {user.first_name ? user.first_name : user.username}
               </button>
               {dropdownOpen && (
                 <ul className="dropdown-menu">
-                  <li onClick={() => navigate("/settings")}>Setting</li>
-                  <li onClick={() => navigate("/change-password")}>
-                    Change Password
-                  </li>
+                  <li onClick={setSettingsModel}>Setting</li>
+                  <li onClick={setChangePasswordModal}>Change Password</li>
                 </ul>
               )}
             </div>
@@ -273,6 +400,157 @@ const ListView = () => {
           </Droppable>
         </DragDropContext>
       </div>
+
+      {SettingsModel && (
+        <div className="SettingsModel-container">
+          <div className="SettingsModel-Model">
+            <div className="header-settings">
+              <h2>Settings</h2>
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleUpdateUser(user);
+              }}
+              className="settings-form"
+            >
+              <div className="form-group">
+                <label htmlFor="first_name">First Name</label>
+                <input
+                  type="text"
+                  id="first_name"
+                  value={user.first_name || ""}
+                  onChange={(e) =>
+                    setUser({ ...user, first_name: e.target.value })
+                  }
+                  placeholder="First Name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="last_name">Last Name</label>
+                <input
+                  type="text"
+                  id="last_name"
+                  value={user.last_name || ""}
+                  onChange={(e) =>
+                    setUser({ ...user, last_name: e.target.value })
+                  }
+                  placeholder="Last Name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={user.email || ""}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <div>
+                  {" "}
+                  <label htmlFor="last_login">Last Login</label>
+                </div>
+
+                <input
+                  type="text"
+                  id="last_login"
+                  value={user.last_login || ""}
+                  disabled
+                  placeholder="Last Login"
+                />
+              </div>
+              <button type="submit" className="update-btn">
+                Update
+              </button>
+            </form>
+            <button className="close-settings-btn" onClick={ModalSettingsModel}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+      {ChangePasswordModal && (
+        <div className="SettingsModel-container">
+          <div className="SettingsModel-Model">
+            <div className="header-settings">
+              <h2>Change Password</h2>
+            </div>
+            <form onSubmit={handlePasswordChange} className="settings-form">
+              {messageform && (
+                <div
+                  className="message"
+                  style={{ color: "red", marginBottom: "10px" }}
+                >
+                  {messageform}
+                </div>
+              )}
+              <div className="form-group">
+                <label htmlFor="old_password">Current Password</label>
+                <input
+                  type="password"
+                  id="old_password"
+                  value={passwordData.old_password}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      old_password: e.target.value,
+                    })
+                  }
+                  placeholder="Enter current password"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="new_password">New Password</label>
+                <input
+                  type="password"
+                  id="new_password"
+                  value={passwordData.new_password}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      new_password: e.target.value,
+                    })
+                  }
+                  placeholder="Enter new password"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="confirm_password">Confirm New Password</label>
+                <input
+                  type="password"
+                  id="confirm_password"
+                  value={passwordData.confirm_password}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      confirm_password: e.target.value,
+                    })
+                  }
+                  placeholder="Confirm new password"
+                  required
+                />
+              </div>
+              <button type="submit" className="update-btn">
+                Change Password
+              </button>
+            </form>
+            <button
+              className="close-settings-btn"
+              onClick={showChangePasswordModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
