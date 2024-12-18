@@ -9,7 +9,7 @@
     ],
     "routes": [
       {
-        "src": "/(.*)",
+        "src": "/api/(.*)",
         "dest": "sabai_backend/sabai_backend/wsgi.py"
       },
       {
