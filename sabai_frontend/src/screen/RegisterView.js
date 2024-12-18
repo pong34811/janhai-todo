@@ -13,7 +13,7 @@ const RegisterView = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(URL_AUTH.RegisterAPI, {
+      await axios.post(URL_AUTH.RegisterAPI, {
         username,
         email,
         password,

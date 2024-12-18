@@ -7,7 +7,6 @@ import {
   AiOutlineUser,
   AiOutlineBars,
   AiOutlineSearch,
-  AiOutlineClose,
 } from "react-icons/ai";
 import { debounce } from "lodash"; // import debounce from lodash
 import "./BoardView.css";
@@ -211,9 +210,7 @@ const Boards = () => {
     setEditBoard(null);
   };
 
-  const handleConfirmDelete = (id) => {
-    setConfirmDeleteId(id);
-  };
+
 
   const handleCloseModal = () => {
     setConfirmDeleteId(null);

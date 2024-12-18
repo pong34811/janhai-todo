@@ -17,7 +17,7 @@ const Login = () => {
         username,
         password,
       });
-      const { access, refresh, user } = response.data;
+      const { access, user } = response.data;
       localStorage.setItem("token", access);
       localStorage.setItem("username", user.username);
       navigate("/boards");

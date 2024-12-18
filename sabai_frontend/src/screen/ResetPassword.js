@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { URL_AUTH } from "../routes/CustomAPI";
-import { useNavigate } from "react-router-dom";
 import "./ResetPassword.css";
 
 const ResetPassword = () => {
@@ -9,7 +8,6 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

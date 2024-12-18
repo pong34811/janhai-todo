@@ -62,8 +62,8 @@ const ListView = () => {
     const movedTask =
       type === "task"
         ? updatedLists
-            .find((list) => list.id === +source.droppableId.split("-")[1])
-            ?.tasks.splice(source.index, 1)
+          .find((list) => list.id === +source.droppableId.split("-")[1])
+          ?.tasks.splice(source.index, 1)
         : null;
 
     if (type === "list" && source.index !== destination.index) {
@@ -198,7 +198,7 @@ const ListView = () => {
     }
 
     try {
-      const response = await axios.post(
+      await axios.post(
         URL_AUTH.ChangePasswordAPI, // ใช้ URL ที่ปรับปรุงใน CustomAPI.js
         {
           old_password: passwordData.old_password,
@@ -221,8 +221,8 @@ const ListView = () => {
       // แสดงข้อความ error จาก response
       setmessageform(
         error.response?.data?.old_password ||
-          error.response?.data?.new_password ||
-          "Failed to change password"
+        error.response?.data?.new_password ||
+        "Failed to change password"
       );
     }
   };

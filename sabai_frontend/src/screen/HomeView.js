@@ -8,7 +8,7 @@ import {
 
 import { GoCalendar, GoBrowser, GoMortarBoard } from "react-icons/go";
 
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function HomeView() {
   return (
@@ -57,7 +57,7 @@ export default function HomeView() {
             </p>
           </div>
           <div className="work-three">
-            <img src="/logo.png" />
+            <img src="/logo.png" alt="login" />
           </div>
         </div>
       </main>

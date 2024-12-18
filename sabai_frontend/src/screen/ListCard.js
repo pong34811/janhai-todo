@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { FiMoreHorizontal, FiEdit, FiTrash2 } from "react-icons/fi";
+import {  FiEdit, FiTrash2 } from "react-icons/fi";
 import TaskCard from "./TaskCard";
 import axios from "axios";
 import { URL_AUTH } from "../routes/CustomAPI";

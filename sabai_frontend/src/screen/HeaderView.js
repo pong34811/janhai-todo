@@ -6,7 +6,7 @@ const HeaderView = () => {
     <>
         <header className="header-bar">
           <div className="group">
-            <img src="/logo.png" className="item-img" />
+            <img src="/logo.png" className="item-img" alt="logo" />
           </div>
           <div className="group">
             <Link to="/features" className="item">
