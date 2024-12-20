@@ -73,14 +73,21 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti', 
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'https://api.janhai.space',
+]
 
-
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8000',
+    'https://api.janhai.space',
+]
 
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://janhai-todo.vercel.app/"
+    "https://api.janhai.space"
 ]
 
 CORS_ALLOW_METHODS = (
