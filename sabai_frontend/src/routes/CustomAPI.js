@@ -1,12 +1,12 @@
 export const URL_AUTH = {
-  LoginAPI: "/api/login/",
-  RegisterAPI: "/api/users/",
-  BoardAPI: "/api/boards/",
-  ListsAPI: "/api/lists/",
+  LoginAPI: "https://api.janhai.space/api/login/",
+  RegisterAPI: "https://api.janhai.space/api/users/",
+  BoardAPI: "https://api.janhai.space/api/boards/",
+  ListsAPI: "https://api.janhai.space/api/lists/",
   ReorderListsAPI: "/api/lists/reorder/",
-  TasksAPI: "/api/tasks/",
+  TasksAPI: "https://api.janhai.space/api/tasks/",
   PasswordResetAPI: "/api/password_reset/",
   PasswordResetConfirmAPI: "/api/password_reset/confirm/",
-  UsersAPI: "/api/users/", // เพิ่ม URL สำหรับ Users
-  ChangePasswordAPI: "/api/change_password/"
+  UsersAPI: "https://api.janhai.space/api/users/", // เพิ่ม URL สำหรับ Users
+  ChangePasswordAPI: "https://api.janhai.space/api/change_password/"
 };
