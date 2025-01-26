@@ -8,5 +8,7 @@ export const URL_AUTH = {
   PasswordResetAPI: "http://localhost:8000/api/password_reset/",
   PasswordResetConfirmAPI: "http://localhost:8000/api/password_reset/confirm/",
   UsersAPI: "http://localhost:8000/api/users/", // เพิ่ม URL สำหรับ Users
-  ChangePasswordAPI: "http://localhost:8000/api/change_password/"
+  ChangePasswordAPI: "http://localhost:8000/api/change_password/",
+  GoogleLoginAPI : "http://localhost:8000/api/google-login/",
+
 };

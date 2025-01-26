@@ -18,14 +18,13 @@ function CustomRoute() {
         {/* Public Routes */}
         <Route path="/login" element={!isAuthenticated() ? <LoginView /> : <Navigate to="/boards" />} />
         <Route path="/register" element={!isAuthenticated() ? <RegisterView /> : <Navigate to="/boards" />} />
-        <Route path="/" element={isAuthenticated() ? <Navigate to="/boards" /> : <HeaderView />}>
+        <Route path="/" element={<HeaderView />}>
           <Route index element={isAuthenticated() ? <Navigate to="/boards" /> : <HomeView />} />
         </Route>
 
         {/* Password Reset Routes */}
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/reset-confirm/:uid/:token" element={<ConfirmResetPassword />} />
-        {/* <Route path="/reset-confirm/" element={<ConfirmResetPassword />} /> */}
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>

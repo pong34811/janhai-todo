@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { URL_AUTH } from "../routes/CustomAPI";
 import "./LoginView.css";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -25,6 +26,35 @@ const Login = () => {
       setmessage("กรอกกรุณาตรวจสอบข้อมูล User เเละ Password ใหม่ ?");
     }
   };
+
+  const handleGoogleLogin = async (credentialResponse) => {
+    const accessToken = credentialResponse?.credential; // รับ Access token จาก Google OAuth
+    console.log("Received access token:", accessToken); // ตรวจสอบว่าเป็น access token ที่ต้องการ
+
+    if (!accessToken) {
+      console.error("No access token received");
+      return;
+    }
+
+    const code = credentialResponse?.code;
+    console.log("Received code:", code);
+
+    try {
+      // ส่ง Access token, Code, และ ID token ไปยัง backend
+      const response = await axios.post(URL_AUTH.GoogleLoginAPI, {
+        access_token: accessToken,
+        code: code, // ส่ง Code ถ้ามี
+        id_token: accessToken, // คุณสามารถส่ง ID token ถ้าแยกออกจาก access token ได้
+      });
+      setmessage("Login Successful:", response.data);
+
+      // หลังจากเข้าสู่ระบบสำเร็จ เปลี่ยนเส้นทางไปที่ /boards
+      navigate("/boards");
+    } catch (error) {
+      console.error("Login Failed:", error.response || error);
+    }
+  };
+
 
   useEffect(() => {
     if (message) {
@@ -80,6 +110,11 @@ const Login = () => {
                 <button type="submit">Login</button>
               </div>
             </form>
+
+            {/* Google Login Button */}
+            <div className="google-login">
+            <GoogleLoginButton />
+            </div>
           </div>
         </div>
       </main>

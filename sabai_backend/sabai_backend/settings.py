@@ -47,6 +47,15 @@ INSTALLED_APPS = [
     'apps.boards',
     'django_filters',
     'django_rest_passwordreset',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    'rest_framework.authtoken',
 ]
 
 
@@ -57,6 +66,26 @@ REST_FRAMEWORK = {
     ),
 }
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '672098494814-q3c25cfm17bg6lj7nhaa4oj22d8if7ah.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    }
+}
+
+REST_USE_JWT = True
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=15),  
@@ -74,8 +103,15 @@ SIMPLE_JWT = {
 }
 
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',  # URL ของ React frontend
+]
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+SECURE_CROSS_ORIGIN_EMBEDDER_POLICY = None
 
 
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -102,14 +138,17 @@ CORS_ALLOW_HEADERS = (
 
 
 MIDDLEWARE = [
+
+    'allauth.account.middleware.AccountMiddleware',  # Add this line here
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'sabai_backend.urls'

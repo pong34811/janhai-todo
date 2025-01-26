@@ -18,6 +18,12 @@ from django.utils.encoding import force_bytes
 from django.http import HttpResponseRedirect
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView
+from allauth.socialaccount.providers import registry
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

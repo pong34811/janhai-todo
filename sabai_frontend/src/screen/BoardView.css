@@ -24,7 +24,6 @@
 
 .work-container {
   margin: auto;
-  background-color: #f5f5f5;
   border-radius: 8px;
   .ul-board {
     display: grid;
@@ -145,7 +144,6 @@
     .no-boards-message {
       text-align: center; /* จัดให้อยู่กลาง */
       padding: 20px;
-      background-color: #f8f9fa; /* เบจอ่อน */
       border-radius: 8px;
       max-width: 400px;
       margin: 50px auto; /* จัดให้อยู่กลางในแนวตั้ง */
