@@ -17,7 +17,7 @@ function GoogleLoginButton() {
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
-      client_id: "", // ใส่ Client ID ที่ได้จาก Google Cloud
+      client_id: "xxxx", // ใส่ Client ID ที่ได้จาก Google Cloud
       callback: handleGoogleLogin,
     });
 
